@@ -1,1 +1,4 @@
 project_id = "nufzfjkpercxnwedyxkv"
+
+[functions.lenzo-ai]
+verify_jwt = false
