@@ -58,10 +58,10 @@ const Index = () => {
       <div className="fixed top-4 right-4 z-50">
         <Link
           to="/login"
-          className="flex items-center gap-2 rounded-lg bg-card/80 backdrop-blur-md border border-border px-3 py-2 text-xs text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all"
+          className="flex items-center gap-2 rounded-xl bg-primary/15 backdrop-blur-md border border-primary/30 px-4 py-2.5 text-sm font-semibold text-foreground hover:bg-primary/25 hover:border-primary/50 transition-all shadow-lg shadow-primary/10"
         >
-          <Shield className="h-3.5 w-3.5" />
-          Admin
+          <Shield className="h-4 w-4 text-primary" />
+          Admin Panel
         </Link>
       </div>
 
