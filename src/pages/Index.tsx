@@ -7,6 +7,8 @@ import { AnnouncementBanner } from '@/components/AnnouncementBanner';
 import { MusicPlayer } from '@/components/MusicPlayer';
 import { LenzoAI } from '@/components/LenzoAI';
 import { Footer } from '@/components/Footer';
+import { Link } from 'react-router-dom';
+import { Shield } from 'lucide-react';
 import type { Tables } from '@/integrations/supabase/types';
 
 const Index = () => {
@@ -34,7 +36,6 @@ const Index = () => {
     };
     fetchAll();
 
-    // Auto-refresh status every 30s
     const interval = setInterval(async () => {
       const { data } = await supabase.from('services').select('*').order('display_order');
       if (data) setServices(data);
@@ -47,28 +48,40 @@ const Index = () => {
   const discordInvite = settings.discord_invite || 'https://discord.gg/your-server';
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
+    <div className="min-h-screen bg-background relative overflow-hidden grid-bg">
       {/* Background orbs */}
-      <div className="bg-orb w-96 h-96 bg-primary/5 top-20 -left-48" />
-      <div className="bg-orb w-[30rem] h-[30rem] bg-primary/3 bottom-40 -right-60" style={{ animationDelay: '5s' }} />
-      <div className="bg-orb w-64 h-64 bg-primary/4 top-1/2 left-1/3" style={{ animationDelay: '10s' }} />
-
-      {/* Noise overlay */}
+      <div className="bg-orb w-[500px] h-[500px] bg-[hsla(0,80%,30%,0.06)] top-0 -left-60" />
+      <div className="bg-orb w-[400px] h-[400px] bg-[hsla(0,60%,25%,0.04)] bottom-20 -right-40" style={{ animationDelay: '7s' }} />
       <div className="noise-overlay" />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 py-8 space-y-8">
+      {/* Admin link */}
+      <div className="fixed top-4 right-4 z-50">
+        <Link
+          to="/login"
+          className="flex items-center gap-2 rounded-lg bg-card/80 backdrop-blur-md border border-border px-3 py-2 text-xs text-muted-foreground hover:text-foreground hover:border-primary/30 transition-all"
+        >
+          <Shield className="h-3.5 w-3.5" />
+          Admin
+        </Link>
+      </div>
+
+      <div className="relative z-10 max-w-5xl mx-auto px-4 py-12 space-y-10">
         {/* Hero */}
         <motion.div
-          initial={{ opacity: 0, y: -30 }}
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center py-12"
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center py-16"
         >
-          <h1 className="text-4xl sm:text-6xl font-bold text-foreground font-sf tracking-tight">
+          <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 border border-primary/20 px-4 py-1.5 text-xs font-medium text-primary mb-6">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+            Service Dashboard
+          </div>
+          <h1 className="text-5xl sm:text-7xl font-extrabold text-foreground tracking-tight text-glow">
             {siteName}
           </h1>
-          <p className="mt-4 text-muted-foreground text-lg max-w-xl mx-auto">
-            Premium Discord Service Dashboard — Your gateway to elite tools and services.
+          <p className="mt-5 text-muted-foreground text-lg max-w-lg mx-auto leading-relaxed">
+            Premium Discord services — your gateway to elite tools and automation.
           </p>
         </motion.div>
 
@@ -78,29 +91,37 @@ const Index = () => {
         )}
 
         {/* Service Cards Grid */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, staggerChildren: 0.1 }}
-          className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-        >
-          {services.map((service, i) => (
-            <motion.div
-              key={service.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 + i * 0.1 }}
-            >
-              <ServiceCard
-                name={service.name}
-                url={service.url}
-                description={service.description || ''}
-                status={service.status}
-                latencyMs={service.latency_ms || 0}
-              />
-            </motion.div>
-          ))}
-        </motion.div>
+        <div className="space-y-3">
+          <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest px-1">Services</h2>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+          >
+            {services.map((service, i) => (
+              <motion.div
+                key={service.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <ServiceCard
+                  name={service.name}
+                  url={service.url}
+                  description={service.description || ''}
+                  status={service.status}
+                  latencyMs={service.latency_ms || 0}
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+          {services.length === 0 && (
+            <div className="glass-water p-12 text-center">
+              <p className="text-muted-foreground text-sm">No services configured yet. Add them from the admin panel.</p>
+            </div>
+          )}
+        </div>
 
         {/* Discord Section */}
         <DiscordSection inviteLink={discordInvite} />
