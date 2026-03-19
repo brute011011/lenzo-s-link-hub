@@ -10,7 +10,6 @@ interface Track {
   audio_url: string;
 }
 
-// Built-in royalty-free tracks (placeholder URLs — will use Web Audio API generated tones)
 const BUILTIN_TRACKS: Track[] = [
   { id: '1', title: 'Midnight Drift', artist: 'Lenzo Beats', genre: 'Lo-Fi', audio_url: '' },
   { id: '2', title: 'Neon Rain', artist: 'Lenzo Beats', genre: 'Ambient', audio_url: '' },
@@ -20,7 +19,18 @@ const BUILTIN_TRACKS: Track[] = [
   { id: '6', title: 'Ocean Static', artist: 'Lenzo Beats', genre: 'Ambient', audio_url: '' },
   { id: '7', title: 'Red Horizon', artist: 'Lenzo Beats', genre: 'Chillhop', audio_url: '' },
   { id: '8', title: 'Shadow Lane', artist: 'Lenzo Beats', genre: 'Lo-Fi', audio_url: '' },
+  { id: '9', title: 'Crystal Rain', artist: 'Lenzo Beats', genre: 'Downtempo', audio_url: '' },
+  { id: '10', title: 'Electric Dusk', artist: 'Lenzo Beats', genre: 'Synthwave', audio_url: '' },
+  { id: '11', title: 'Vapor Trail', artist: 'Lenzo Beats', genre: 'Vaporwave', audio_url: '' },
+  { id: '12', title: 'Moonlit Walk', artist: 'Lenzo Beats', genre: 'Lo-Fi', audio_url: '' },
+  { id: '13', title: 'Deep Focus', artist: 'Lenzo Beats', genre: 'Ambient', audio_url: '' },
+  { id: '14', title: 'Night Drive', artist: 'Lenzo Beats', genre: 'Chillwave', audio_url: '' },
+  { id: '15', title: 'Pulse Code', artist: 'Lenzo Beats', genre: 'Electronic', audio_url: '' },
+  { id: '16', title: 'Soft Static', artist: 'Lenzo Beats', genre: 'Lo-Fi', audio_url: '' },
 ];
+
+// Musical note frequencies for pleasant melodies
+const NOTES = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25];
 
 export const MusicPlayer = ({ dbTracks }: { dbTracks?: Track[] }) => {
   const tracks = dbTracks && dbTracks.length > 0 ? dbTracks : BUILTIN_TRACKS;
@@ -30,67 +40,100 @@ export const MusicPlayer = ({ dbTracks }: { dbTracks?: Track[] }) => {
   const [repeat, setRepeat] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const audioCtxRef = useRef<AudioContext | null>(null);
-  const oscRef = useRef<OscillatorNode | null>(null);
-  const gainRef = useRef<GainNode | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const activeNodesRef = useRef<{ osc: OscillatorNode; gain: GainNode }[]>([]);
 
-  const current = tracks[currentIndex];
+  const current = tracks[currentIndex] ?? tracks[0];
 
-  // Simple tone generator for demo (no real audio files)
-  const startTone = useCallback(() => {
-    if (!audioCtxRef.current) {
-      audioCtxRef.current = new AudioContext();
+  const stopAllNotes = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
+    activeNodesRef.current.forEach(({ osc, gain }) => {
+      try {
+        gain.gain.exponentialRampToValueAtTime(0.0001, (audioCtxRef.current?.currentTime ?? 0) + 0.1);
+        osc.stop((audioCtxRef.current?.currentTime ?? 0) + 0.15);
+      } catch {
+        // already stopped
+      }
+    });
+    activeNodesRef.current = [];
+  }, []);
+
+  const playNote = useCallback((freq: number, duration: number) => {
+    if (!audioCtxRef.current) return;
     const ctx = audioCtxRef.current;
-    if (oscRef.current) {
-      try { oscRef.current.stop(); } catch {}
-    }
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.type = 'sine';
-    // Different frequency per track for variety
-    osc.frequency.value = 220 + currentIndex * 40;
-    gain.gain.value = 0.05;
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.03, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
     osc.connect(gain);
     gain.connect(ctx.destination);
-    osc.start();
-    oscRef.current = osc;
-    gainRef.current = gain;
-  }, [currentIndex]);
-
-  const stopTone = useCallback(() => {
-    if (oscRef.current) {
-      try { oscRef.current.stop(); } catch {}
-      oscRef.current = null;
-    }
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + duration);
+    const node = { osc, gain };
+    activeNodesRef.current.push(node);
+    osc.onended = () => {
+      activeNodesRef.current = activeNodesRef.current.filter(n => n !== node);
+    };
   }, []);
+
+  const startMelody = useCallback(() => {
+    try {
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new AudioContext();
+      }
+      if (audioCtxRef.current.state === 'suspended') {
+        audioCtxRef.current.resume();
+      }
+      // Play a sequence of notes based on track index for variety
+      const seed = currentIndex * 3;
+      let noteIdx = 0;
+      // Play first note immediately
+      const getFreq = () => NOTES[(seed + noteIdx) % NOTES.length] * (currentIndex % 2 === 0 ? 1 : 0.5);
+      playNote(getFreq(), 1.2);
+      noteIdx++;
+
+      intervalRef.current = setInterval(() => {
+        playNote(getFreq(), 1.2);
+        noteIdx++;
+        if (noteIdx > 100) noteIdx = 0;
+      }, 800);
+    } catch {
+      // AudioContext not available
+    }
+  }, [currentIndex, playNote]);
 
   useEffect(() => {
     if (isPlaying) {
-      startTone();
+      startMelody();
     } else {
-      stopTone();
+      stopAllNotes();
     }
-    return () => stopTone();
-  }, [isPlaying, startTone, stopTone]);
+    return () => stopAllNotes();
+  }, [isPlaying, startMelody, stopAllNotes]);
 
   const next = () => {
-    if (shuffled) {
-      setCurrentIndex(Math.floor(Math.random() * tracks.length));
-    } else {
-      setCurrentIndex((prev) => (prev + 1) % tracks.length);
-    }
+    stopAllNotes();
+    const nextIdx = shuffled
+      ? Math.floor(Math.random() * tracks.length)
+      : (currentIndex + 1) % tracks.length;
+    setCurrentIndex(nextIdx);
   };
 
   const prev = () => {
-    setCurrentIndex((prev) => (prev - 1 + tracks.length) % tracks.length);
+    stopAllNotes();
+    setCurrentIndex((p) => (p - 1 + tracks.length) % tracks.length);
   };
 
+  if (!current) return null;
+
   return (
-    <motion.div
-      layout
-      className="fixed bottom-4 right-4 z-40"
-    >
-      <AnimatePresence>
+    <motion.div layout className="fixed bottom-4 right-4 z-40">
+      <AnimatePresence mode="wait">
         {!expanded ? (
           <motion.button
             key="mini"
@@ -101,6 +144,9 @@ export const MusicPlayer = ({ dbTracks }: { dbTracks?: Track[] }) => {
             className="glass-water h-14 w-14 flex items-center justify-center rounded-2xl hover:scale-110 transition-transform"
           >
             <Music className="h-6 w-6 text-primary" />
+            {isPlaying && (
+              <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+            )}
           </motion.button>
         ) : (
           <motion.div
@@ -111,8 +157,8 @@ export const MusicPlayer = ({ dbTracks }: { dbTracks?: Track[] }) => {
             className="glass-water w-80 p-4 rounded-2xl"
           >
             <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <div className="h-10 w-10 rounded-lg bg-primary/20 flex items-center justify-center">
+              <div className="flex items-center gap-2 min-w-0">
+                <div className="h-10 w-10 rounded-lg bg-primary/20 flex items-center justify-center shrink-0">
                   <Music className="h-5 w-5 text-primary" />
                 </div>
                 <div className="min-w-0">
@@ -120,19 +166,21 @@ export const MusicPlayer = ({ dbTracks }: { dbTracks?: Track[] }) => {
                   <p className="text-xs text-muted-foreground truncate">{current.artist} • {current.genre}</p>
                 </div>
               </div>
-              <button onClick={() => setExpanded(false)} className="text-muted-foreground hover:text-foreground text-xs">
+              <button onClick={() => setExpanded(false)} className="text-muted-foreground hover:text-foreground text-xs shrink-0 ml-2">
                 ✕
               </button>
             </div>
 
-            {/* Progress bar placeholder */}
+            {/* Progress bar */}
             <div className="h-1 w-full rounded-full bg-muted mb-3 overflow-hidden">
-              <motion.div
-                className="h-full bg-primary rounded-full"
-                animate={isPlaying ? { width: ['0%', '100%'] } : {}}
-                transition={isPlaying ? { duration: 30, repeat: Infinity } : {}}
-                style={{ width: isPlaying ? undefined : '0%' }}
-              />
+              {isPlaying && (
+                <motion.div
+                  className="h-full bg-primary rounded-full"
+                  initial={{ width: '0%' }}
+                  animate={{ width: '100%' }}
+                  transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+                />
+              )}
             </div>
 
             <div className="flex items-center justify-center gap-3">
@@ -162,7 +210,6 @@ export const MusicPlayer = ({ dbTracks }: { dbTracks?: Track[] }) => {
               </button>
             </div>
 
-            {/* Track status */}
             <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
               <span className="flex items-center gap-1">
                 <Volume2 className="h-3 w-3" />
