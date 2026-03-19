@@ -41,7 +41,7 @@ const Login = () => {
           <div className="h-16 w-16 rounded-2xl bg-primary/20 flex items-center justify-center mx-auto mb-4">
             <Lock className="h-8 w-8 text-primary" />
           </div>
-          <h1 className="text-2xl font-bold text-foreground font-sf">Admin Access</h1>
+          <h1 className="text-2xl font-extrabold text-foreground tracking-tight">Admin Access</h1>
           <p className="text-muted-foreground text-sm mt-1">Lenzo Beam Central Panel</p>
         </div>
 

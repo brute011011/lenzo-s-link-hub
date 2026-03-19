@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 
 const DiscordLogo = () => (
-  <svg width="28" height="22" viewBox="0 0 127.14 96.36" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-    <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/>
+  <svg width="28" height="22" viewBox="0 0 71 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M60.1 4.9A58.5 58.5 0 0 0 45.4.2a.2.2 0 0 0-.2.1 41 41 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37 37 0 0 0 25.4.3a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 5a.2.2 0 0 0-.1 0C1.5 17.6-.9 29.8.3 41.9v.1a58.7 58.7 0 0 0 17.7 9 .2.2 0 0 0 .3-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.6 38.6 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.9a.2.2 0 0 1 .2 0 41.9 41.9 0 0 0 35.6 0 .2.2 0 0 1 .2 0l1.1.9a.2.2 0 0 1 0 .3 36.2 36.2 0 0 1-5.5 2.7.2.2 0 0 0-.1.3 47.2 47.2 0 0 0 3.6 5.8.2.2 0 0 0 .2.1A58.5 58.5 0 0 0 70.3 42v-.1c1.4-14.5-2.4-27.1-10.1-38.2a.2.2 0 0 0-.1 0ZM23.7 34.4c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6.1 3 6 6.7c0 3.7-2.6 6.7-6 6.7Zm22.2 0c-3.3 0-6-3-6-6.7s2.6-6.7 6-6.7 6 3 6 6.7c0 3.7-2.6 6.7-6 6.7Z" fill="currentColor"/>
   </svg>
 );
 
@@ -15,27 +15,27 @@ export const DiscordSection = ({ inviteLink }: DiscordSectionProps) => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.6 }}
+      transition={{ delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
       className="glass-water p-8 text-center"
     >
-      <div className="flex flex-col items-center gap-4">
-        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/20 text-foreground">
+      <div className="flex items-center justify-center mb-4">
+        <div className="h-14 w-14 rounded-2xl bg-[hsl(235,86%,65%)]/15 flex items-center justify-center text-[hsl(235,86%,65%)]">
           <DiscordLogo />
         </div>
-        <h2 className="text-2xl font-bold text-foreground font-sf">Join Our Community</h2>
-        <p className="text-muted-foreground max-w-md">
-          Connect with the Lenzo Beam community. Get updates, support, and exclusive access.
-        </p>
-        <a
-          href={inviteLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-2 flex items-center gap-2 rounded-xl bg-primary px-8 py-3 font-bold text-primary-foreground transition-all hover:bg-primary/80 hover:scale-105"
-        >
-          <DiscordLogo />
-          Join Discord Server
-        </a>
       </div>
+      <h2 className="text-2xl font-extrabold text-foreground tracking-tight mb-2">Join Our Community</h2>
+      <p className="text-muted-foreground text-sm mb-6 max-w-md mx-auto">
+        Connect with other users, get support, and stay updated with the latest news.
+      </p>
+      <a
+        href={inviteLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center gap-2.5 rounded-lg bg-[hsl(235,86%,65%)] px-6 py-3 text-sm font-bold text-white transition-all hover:bg-[hsl(235,86%,58%)] active:scale-[0.98]"
+      >
+        <DiscordLogo />
+        Join Discord Server
+      </a>
     </motion.div>
   );
 };
