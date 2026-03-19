@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 import {
   Settings, Link2, Bell, Shield, Music, Globe, LogOut,
-  Save, Plus, Trash2, Edit2, Check, X
+  Save, Plus, Trash2, Edit2, Check, X, Home
 } from 'lucide-react';
 import type { Tables } from '@/integrations/supabase/types';
 
@@ -13,6 +14,7 @@ type Tab = 'services' | 'announcements' | 'discord' | 'site' | 'security' | 'mus
 const Admin = () => {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [tab, setTab] = useState<Tab>('services');
   const [services, setServices] = useState<Tables<'services'>[]>([]);
   const [announcements, setAnnouncements] = useState<Tables<'announcements'>[]>([]);
@@ -22,6 +24,8 @@ const Admin = () => {
   // Edit states
   const [editingService, setEditingService] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<Record<string, string>>({});
+  const [showAddService, setShowAddService] = useState(false);
+  const [newService, setNewService] = useState({ name: '', url: '', description: '', status: 'online', latency_ms: '0' });
   const [newAnnouncement, setNewAnnouncement] = useState({ title: '', content: '' });
   const [newPassword, setNewPassword] = useState('');
   const [newEmail, setNewEmail] = useState('');
@@ -47,6 +51,39 @@ const Admin = () => {
       setSettingsForm(map);
     }
     if (mRes.data) setMusicTracks(mRes.data);
+  };
+
+  const addService = async () => {
+    if (!newService.name || !newService.url) {
+      toast({ title: 'Error', description: 'Name and URL are required.', variant: 'destructive' });
+      return;
+    }
+    const { error } = await supabase.from('services').insert({
+      name: newService.name,
+      url: newService.url,
+      description: newService.description,
+      status: newService.status,
+      latency_ms: parseInt(newService.latency_ms || '0'),
+      display_order: services.length + 1,
+    });
+    if (error) {
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+    } else {
+      toast({ title: 'Added', description: 'New service created.' });
+      setNewService({ name: '', url: '', description: '', status: 'online', latency_ms: '0' });
+      setShowAddService(false);
+      fetchAll();
+    }
+  };
+
+  const deleteService = async (id: string) => {
+    const { error } = await supabase.from('services').delete().eq('id', id);
+    if (error) {
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+    } else {
+      toast({ title: 'Deleted', description: 'Service removed.' });
+      fetchAll();
+    }
   };
 
   const saveService = async (id: string) => {
@@ -139,9 +176,14 @@ const Admin = () => {
             <h1 className="text-2xl font-bold text-foreground font-sf">Admin Panel</h1>
             <p className="text-sm text-muted-foreground">{user?.email}</p>
           </div>
-          <button onClick={signOut} className="flex items-center gap-2 rounded-lg bg-muted px-4 py-2 text-sm text-foreground hover:bg-muted/80 transition-colors">
-            <LogOut className="h-4 w-4" /> Sign Out
-          </button>
+          <div className="flex items-center gap-2">
+            <button onClick={() => navigate('/')} className="flex items-center gap-2 rounded-lg bg-muted px-4 py-2 text-sm text-foreground hover:bg-muted/80 transition-colors">
+              <Home className="h-4 w-4" /> View Site
+            </button>
+            <button onClick={signOut} className="flex items-center gap-2 rounded-lg bg-muted px-4 py-2 text-sm text-foreground hover:bg-muted/80 transition-colors">
+              <LogOut className="h-4 w-4" /> Sign Out
+            </button>
+          </div>
         </div>
 
         {/* Tabs */}
@@ -166,7 +208,37 @@ const Admin = () => {
           {/* Services Tab */}
           {tab === 'services' && (
             <div className="space-y-4">
-              <h2 className="text-lg font-bold text-foreground">Service Links Manager</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-bold text-foreground">Service Links Manager</h2>
+                <button
+                  onClick={() => setShowAddService(!showAddService)}
+                  className="flex items-center gap-1 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/80 transition-colors"
+                >
+                  <Plus className="h-4 w-4" /> Add Service
+                </button>
+              </div>
+
+              {/* Add Service Form */}
+              {showAddService && (
+                <div className="rounded-lg bg-primary/5 border border-primary/20 p-4 space-y-3">
+                  <h3 className="text-sm font-bold text-foreground">New Service</h3>
+                  <input value={newService.name} onChange={e => setNewService({ ...newService, name: e.target.value })} className="w-full rounded-lg bg-background border border-border px-3 py-2 text-sm text-foreground" placeholder="Service Name" />
+                  <input value={newService.url} onChange={e => setNewService({ ...newService, url: e.target.value })} className="w-full rounded-lg bg-background border border-border px-3 py-2 text-sm text-foreground" placeholder="https://..." />
+                  <input value={newService.description} onChange={e => setNewService({ ...newService, description: e.target.value })} className="w-full rounded-lg bg-background border border-border px-3 py-2 text-sm text-foreground" placeholder="Description" />
+                  <div className="flex gap-3">
+                    <select value={newService.status} onChange={e => setNewService({ ...newService, status: e.target.value })} className="rounded-lg bg-background border border-border px-3 py-2 text-sm text-foreground">
+                      <option value="online">Online</option>
+                      <option value="offline">Offline</option>
+                    </select>
+                    <input type="number" value={newService.latency_ms} onChange={e => setNewService({ ...newService, latency_ms: e.target.value })} className="w-24 rounded-lg bg-background border border-border px-3 py-2 text-sm text-foreground" placeholder="MS" />
+                  </div>
+                  <div className="flex gap-2">
+                    <button onClick={addService} className="flex items-center gap-1 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground"><Check className="h-4 w-4" /> Create</button>
+                    <button onClick={() => setShowAddService(false)} className="flex items-center gap-1 rounded-lg bg-muted px-4 py-2 text-sm text-foreground"><X className="h-4 w-4" /> Cancel</button>
+                  </div>
+                </div>
+              )}
+
               {services.map(s => (
                 <div key={s.id} className="rounded-lg bg-muted/50 p-4 border border-border">
                   {editingService === s.id ? (
@@ -196,25 +268,36 @@ const Admin = () => {
                         </div>
                         <p className="text-sm text-muted-foreground mt-1 truncate max-w-md">{s.url}</p>
                       </div>
-                      <button
-                        onClick={() => {
-                          setEditingService(s.id);
-                          setEditForm({
-                            name: s.name,
-                            url: s.url,
-                            description: s.description || '',
-                            status: s.status,
-                            latency_ms: String(s.latency_ms || 0),
-                          });
-                        }}
-                        className="flex items-center gap-1 rounded-lg bg-primary/20 px-3 py-1.5 text-sm text-foreground hover:bg-primary/30"
-                      >
-                        <Edit2 className="h-3.5 w-3.5" /> Edit
-                      </button>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => {
+                            setEditingService(s.id);
+                            setEditForm({
+                              name: s.name,
+                              url: s.url,
+                              description: s.description || '',
+                              status: s.status,
+                              latency_ms: String(s.latency_ms || 0),
+                            });
+                          }}
+                          className="flex items-center gap-1 rounded-lg bg-primary/20 px-3 py-1.5 text-sm text-foreground hover:bg-primary/30"
+                        >
+                          <Edit2 className="h-3.5 w-3.5" /> Edit
+                        </button>
+                        <button
+                          onClick={() => deleteService(s.id)}
+                          className="flex items-center gap-1 rounded-lg bg-destructive/20 px-3 py-1.5 text-sm text-destructive hover:bg-destructive/30"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
               ))}
+              {services.length === 0 && (
+                <p className="text-sm text-muted-foreground text-center py-8">No services yet. Click "Add Service" to create one.</p>
+              )}
             </div>
           )}
 
