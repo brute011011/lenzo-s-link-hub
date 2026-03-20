@@ -20,7 +20,7 @@ export const Footer = () => (
   <footer className="py-8 border-t border-border/50">
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
       <p className="text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Lenzo Beam Central — Built by <span className="text-foreground font-medium">@3r89</span>
+        © {new Date().getFullYear()} Lenzo Beam Central — Built by <a href="https://discord.com/users/3r89" target="_blank" rel="noopener noreferrer" className="text-foreground font-medium hover:text-primary transition-colors">@3r89</a>
       </p>
       <div className="flex items-center gap-4">
         <a href="https://discord.gg/your-server" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors"><DiscordIcon /></a>
