@@ -16,8 +16,9 @@ export const DiscordSection = ({ inviteLink }: DiscordSectionProps) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className="glass-water p-8 text-center"
+      className="ios-26-liquid p-8 text-center"
     >
+      <div className="liquid-sheen" />
       <div className="flex items-center justify-center mb-4">
         <div className="h-14 w-14 rounded-2xl bg-[hsl(235,86%,65%)]/15 flex items-center justify-center text-[hsl(235,86%,65%)]">
           <DiscordLogo />
