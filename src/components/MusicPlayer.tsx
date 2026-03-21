@@ -172,7 +172,7 @@ export const MusicPlayer = ({ dbTracks }: { dbTracks?: Track[] }) => {
             </div>
 
             {/* Progress bar */}
-            <div className="h-1 w-full rounded-full bg-muted mb-3 overflow-hidden">
+            <div className="h-1 w-full rounded-full bg-muted/40 mb-3 overflow-hidden relative z-10">
               {isPlaying && (
                 <motion.div
                   className="h-full bg-primary rounded-full"
@@ -183,10 +183,10 @@ export const MusicPlayer = ({ dbTracks }: { dbTracks?: Track[] }) => {
               )}
             </div>
 
-            <div className="flex items-center justify-center gap-3">
+            <div className="flex items-center justify-center gap-3 relative z-10">
               <button
                 onClick={() => setShuffled(!shuffled)}
-                className={`p-1.5 rounded-lg transition-colors ${shuffled ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
+                className={`p-1.5 rounded-full transition-colors ${shuffled ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
               >
                 <Shuffle className="h-4 w-4" />
               </button>
@@ -204,13 +204,13 @@ export const MusicPlayer = ({ dbTracks }: { dbTracks?: Track[] }) => {
               </button>
               <button
                 onClick={() => setRepeat(!repeat)}
-                className={`p-1.5 rounded-lg transition-colors ${repeat ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
+                className={`p-1.5 rounded-full transition-colors ${repeat ? 'text-primary' : 'text-muted-foreground hover:text-foreground'}`}
               >
                 <Repeat className="h-4 w-4" />
               </button>
             </div>
 
-            <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
+            <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground relative z-10">
               <span className="flex items-center gap-1">
                 <Volume2 className="h-3 w-3" />
                 {isPlaying ? 'Now Playing' : 'Paused'}
