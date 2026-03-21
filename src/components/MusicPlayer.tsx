@@ -141,9 +141,11 @@ export const MusicPlayer = ({ dbTracks }: { dbTracks?: Track[] }) => {
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             onClick={() => setExpanded(true)}
-            className="glass-water h-14 w-14 flex items-center justify-center rounded-2xl hover:scale-110 transition-transform"
+            className="ios-liquid-glass h-14 w-14 flex items-center justify-center hover:scale-110 transition-transform"
+            style={{ borderRadius: '999px' }}
           >
-            <Music className="h-6 w-6 text-primary" />
+            <div className="surface-sheen" style={{ borderRadius: '999px' }} />
+            <Music className="h-6 w-6 text-primary relative z-10" />
             {isPlaying && (
               <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
             )}
@@ -154,8 +156,10 @@ export const MusicPlayer = ({ dbTracks }: { dbTracks?: Track[] }) => {
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            className="glass-water w-80 p-4 rounded-2xl"
+            className="ios-liquid-glass w-80 p-5"
+            style={{ borderRadius: '28px' }}
           >
+            <div className="surface-sheen" style={{ borderRadius: '28px' }} />
             <div className="flex items-center justify-between mb-3 relative z-10">
               <div className="flex items-center gap-2 min-w-0">
                 <div className="h-10 w-10 rounded-xl bg-primary/20 flex items-center justify-center shrink-0">
