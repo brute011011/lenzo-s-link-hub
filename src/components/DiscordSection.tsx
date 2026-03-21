@@ -16,27 +16,29 @@ export const DiscordSection = ({ inviteLink }: DiscordSectionProps) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className="ios-26-liquid p-8 text-center"
+      className="ios-liquid-glass p-8 text-center"
     >
-      <div className="liquid-sheen" />
-      <div className="flex items-center justify-center mb-4">
-        <div className="h-14 w-14 rounded-2xl bg-[hsl(235,86%,65%)]/15 flex items-center justify-center text-[hsl(235,86%,65%)]">
-          <DiscordLogo />
+      <div className="surface-sheen" />
+      <div className="relative z-10">
+        <div className="flex items-center justify-center mb-4">
+          <div className="h-14 w-14 rounded-2xl bg-[hsl(235,86%,65%)]/15 flex items-center justify-center text-[hsl(235,86%,65%)]">
+            <DiscordLogo />
+          </div>
         </div>
+        <h2 className="text-2xl font-bold text-foreground mb-2">Join Our Community</h2>
+        <p className="text-muted-foreground text-sm mb-6 max-w-md mx-auto">
+          Connect with other users, get support, and stay updated with the latest news.
+        </p>
+        <a
+          href={inviteLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2.5 pill-btn bg-[hsl(235,86%,65%)] px-7 py-3 text-sm font-bold text-white hover:bg-[hsl(235,86%,58%)] active:scale-[0.98]"
+        >
+          <DiscordLogo />
+          Join Discord Server
+        </a>
       </div>
-      <h2 className="text-2xl font-extrabold text-foreground tracking-tight mb-2">Join Our Community</h2>
-      <p className="text-muted-foreground text-sm mb-6 max-w-md mx-auto">
-        Connect with other users, get support, and stay updated with the latest news.
-      </p>
-      <a
-        href={inviteLink}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="inline-flex items-center gap-2.5 rounded-lg bg-[hsl(235,86%,65%)] px-6 py-3 text-sm font-bold text-white transition-all hover:bg-[hsl(235,86%,58%)] active:scale-[0.98]"
-      >
-        <DiscordLogo />
-        Join Discord Server
-      </a>
     </motion.div>
   );
 };

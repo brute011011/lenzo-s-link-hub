@@ -48,22 +48,26 @@ const Index = () => {
   const discordInvite = settings.discord_invite || 'https://discord.gg/your-server';
 
   return (
-    <div className="min-h-screen relative overflow-hidden" style={{ background: 'linear-gradient(135deg, hsl(250, 80%, 12%) 0%, hsl(220, 90%, 15%) 30%, hsl(280, 70%, 14%) 60%, hsl(200, 85%, 10%) 100%)' }}>
+    <div className="min-h-screen relative overflow-hidden dark" style={{
+      background: 'linear-gradient(135deg, #0a0a2e 0%, #1a0533 25%, #0d1b3e 50%, #1c0a3a 75%, #050520 100%)'
+    }}>
       {/* Vibrant mesh gradient orbs for liquid glass refraction */}
-      <div className="bg-orb w-[600px] h-[600px] top-[-10%] left-[-10%]" style={{ background: 'radial-gradient(circle, hsla(220, 100%, 55%, 0.25), transparent 70%)' }} />
-      <div className="bg-orb w-[500px] h-[500px] top-[30%] right-[-10%]" style={{ background: 'radial-gradient(circle, hsla(280, 90%, 50%, 0.2), transparent 70%)', animationDelay: '5s' }} />
-      <div className="bg-orb w-[450px] h-[450px] bottom-[-5%] left-[20%]" style={{ background: 'radial-gradient(circle, hsla(200, 100%, 50%, 0.15), transparent 70%)', animationDelay: '10s' }} />
-      <div className="bg-orb w-[350px] h-[350px] top-[50%] left-[50%]" style={{ background: 'radial-gradient(circle, hsla(0, 85%, 40%, 0.12), transparent 70%)', animationDelay: '15s' }} />
+      <div className="bg-orb w-[700px] h-[700px] top-[-15%] left-[-15%]" style={{ background: 'radial-gradient(circle, hsla(211, 100%, 55%, 0.3), transparent 70%)' }} />
+      <div className="bg-orb w-[600px] h-[600px] top-[20%] right-[-15%]" style={{ background: 'radial-gradient(circle, hsla(280, 90%, 50%, 0.25), transparent 70%)', animationDelay: '5s' }} />
+      <div className="bg-orb w-[500px] h-[500px] bottom-[-10%] left-[15%]" style={{ background: 'radial-gradient(circle, hsla(190, 100%, 50%, 0.2), transparent 70%)', animationDelay: '10s' }} />
+      <div className="bg-orb w-[400px] h-[400px] top-[60%] left-[50%]" style={{ background: 'radial-gradient(circle, hsla(330, 90%, 50%, 0.15), transparent 70%)', animationDelay: '15s' }} />
       <div className="noise-overlay" />
 
       {/* Admin link */}
       <div className="fixed top-4 right-4 z-50">
         <Link
           to="/login"
-          className="flex items-center gap-2 rounded-xl bg-primary/15 backdrop-blur-md border border-primary/30 px-4 py-2.5 text-sm font-semibold text-foreground hover:bg-primary/25 hover:border-primary/50 transition-all shadow-lg shadow-primary/10"
+          className="ios-liquid-glass flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-foreground hover:scale-105 transition-transform"
+          style={{ borderRadius: '999px' }}
         >
-          <Shield className="h-4 w-4 text-primary" />
-          Admin Panel
+          <div className="surface-sheen" style={{ borderRadius: '999px' }} />
+          <Shield className="h-4 w-4 text-primary relative z-10" />
+          <span className="relative z-10">Admin</span>
         </Link>
       </div>
 
@@ -75,11 +79,11 @@ const Index = () => {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="text-center py-16"
         >
-          <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 border border-primary/20 px-4 py-1.5 text-xs font-medium text-primary mb-6">
+          <div className="inline-flex items-center gap-2 pill-btn bg-primary/10 border border-primary/20 px-5 py-2 text-xs font-medium text-primary mb-6">
             <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
             Service Dashboard
           </div>
-          <h1 className="text-5xl sm:text-7xl font-extrabold text-foreground tracking-tight text-glow">
+          <h1 className="text-5xl sm:text-7xl font-bold text-foreground tracking-tight text-glow">
             {siteName}
           </h1>
           <p className="mt-5 text-muted-foreground text-lg max-w-lg mx-auto leading-relaxed">
@@ -99,7 +103,7 @@ const Index = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-5"
           >
             {services.map((service, i) => (
               <motion.div
@@ -119,8 +123,8 @@ const Index = () => {
             ))}
           </motion.div>
           {services.length === 0 && (
-            <div className="ios-26-liquid p-12 text-center">
-              <div className="liquid-sheen" />
+            <div className="ios-liquid-glass p-12 text-center">
+              <div className="surface-sheen" />
               <p className="text-muted-foreground text-sm relative z-10">No services configured yet. Add them from the admin panel.</p>
             </div>
           )}
