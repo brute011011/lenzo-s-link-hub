@@ -156,9 +156,9 @@ export const MusicPlayer = ({ dbTracks }: { dbTracks?: Track[] }) => {
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             className="glass-water w-80 p-4 rounded-2xl"
           >
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center justify-between mb-3 relative z-10">
               <div className="flex items-center gap-2 min-w-0">
-                <div className="h-10 w-10 rounded-lg bg-primary/20 flex items-center justify-center shrink-0">
+                <div className="h-10 w-10 rounded-xl bg-primary/20 flex items-center justify-center shrink-0">
                   <Music className="h-5 w-5 text-primary" />
                 </div>
                 <div className="min-w-0">
