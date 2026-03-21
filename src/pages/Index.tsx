@@ -119,8 +119,9 @@ const Index = () => {
             ))}
           </motion.div>
           {services.length === 0 && (
-            <div className="glass-water p-12 text-center">
-              <p className="text-muted-foreground text-sm">No services configured yet. Add them from the admin panel.</p>
+            <div className="ios-26-liquid p-12 text-center">
+              <div className="liquid-sheen" />
+              <p className="text-muted-foreground text-sm relative z-10">No services configured yet. Add them from the admin panel.</p>
             </div>
           )}
         </div>

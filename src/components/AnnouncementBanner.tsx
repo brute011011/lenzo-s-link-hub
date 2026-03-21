@@ -23,8 +23,9 @@ export const AnnouncementBanner = ({ announcements }: { announcements: Announcem
             initial={{ opacity: 0, y: -20, height: 0 }}
             animate={{ opacity: 1, y: 0, height: 'auto' }}
             exit={{ opacity: 0, y: -20, height: 0 }}
-            className="glass-water border-primary/30 p-4"
+            className="ios-26-liquid border-primary/30 p-4"
           >
+            <div className="liquid-sheen" />
             <div className="flex items-start gap-3">
               <Bell className="h-5 w-5 text-primary mt-0.5 shrink-0" />
               <div className="flex-1 min-w-0">

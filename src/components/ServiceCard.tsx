@@ -16,8 +16,9 @@ export const ServiceCard = ({ name, url, description, status, latencyMs }: Servi
     <motion.div
       whileHover={{ scale: 1.01, y: -2 }}
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-      className="glass-water group p-5 relative"
+      className="ios-26-liquid group p-5 relative"
     >
+      <div className="liquid-sheen" />
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-lg font-bold text-foreground tracking-tight">{name}</h3>
