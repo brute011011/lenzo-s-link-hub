@@ -48,25 +48,16 @@ const Index = () => {
   const discordInvite = settings.discord_invite || 'https://discord.gg/your-server';
 
   return (
-    <div className="min-h-screen relative overflow-hidden dark" style={{
-      background: 'linear-gradient(135deg, #0a0a2e 0%, #1a0533 25%, #0d1b3e 50%, #1c0a3a 75%, #050520 100%)'
-    }}>
-      {/* Vibrant mesh gradient orbs for liquid glass refraction */}
-      <div className="bg-orb w-[700px] h-[700px] top-[-15%] left-[-15%]" style={{ background: 'radial-gradient(circle, hsla(211, 100%, 55%, 0.3), transparent 70%)' }} />
-      <div className="bg-orb w-[600px] h-[600px] top-[20%] right-[-15%]" style={{ background: 'radial-gradient(circle, hsla(280, 90%, 50%, 0.25), transparent 70%)', animationDelay: '5s' }} />
-      <div className="bg-orb w-[500px] h-[500px] bottom-[-10%] left-[15%]" style={{ background: 'radial-gradient(circle, hsla(190, 100%, 50%, 0.2), transparent 70%)', animationDelay: '10s' }} />
-      <div className="bg-orb w-[400px] h-[400px] top-[60%] left-[50%]" style={{ background: 'radial-gradient(circle, hsla(330, 90%, 50%, 0.15), transparent 70%)', animationDelay: '15s' }} />
-      <div className="noise-overlay" />
-
+    <div className="min-h-screen relative" style={{ background: '#F5F5F7' }}>
       {/* Admin link */}
       <div className="fixed top-4 right-4 z-50">
         <Link
           to="/login"
-          className="ios-liquid-glass flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-foreground hover:scale-105 transition-transform"
-          style={{ borderRadius: '999px' }}
+          className="safari-clean-glass flex items-center gap-2 px-5 py-2.5 text-sm font-semibold hover:scale-105 transition-transform"
+          style={{ borderRadius: '999px', color: '#1D1D1F' }}
         >
           <div className="surface-sheen" style={{ borderRadius: '999px' }} />
-          <Shield className="h-4 w-4 text-primary relative z-10" />
+          <Shield className="h-4 w-4 relative z-10" style={{ color: '#007AFF' }} />
           <span className="relative z-10">Admin</span>
         </Link>
       </div>
@@ -79,14 +70,14 @@ const Index = () => {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="text-center py-16"
         >
-          <div className="inline-flex items-center gap-2 pill-btn bg-primary/10 border border-primary/20 px-5 py-2 text-xs font-medium text-primary mb-6">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+          <div className="inline-flex items-center gap-2 pill-btn px-5 py-2 text-xs font-medium mb-6" style={{ background: 'rgba(0,122,255,0.08)', color: '#007AFF', border: '1px solid rgba(0,122,255,0.15)' }}>
+            <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: '#007AFF' }} />
             Service Dashboard
           </div>
-          <h1 className="text-5xl sm:text-7xl font-bold text-foreground tracking-tight text-glow">
+          <h1 className="text-5xl sm:text-7xl font-bold tracking-tight" style={{ color: '#1D1D1F' }}>
             {siteName}
           </h1>
-          <p className="mt-5 text-muted-foreground text-lg max-w-lg mx-auto leading-relaxed">
+          <p className="mt-5 text-lg max-w-lg mx-auto leading-relaxed" style={{ color: '#86868B' }}>
             Premium Discord services — your gateway to elite tools and automation.
           </p>
         </motion.div>
@@ -98,7 +89,7 @@ const Index = () => {
 
         {/* Service Cards Grid */}
         <div className="space-y-3">
-          <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest px-1">Services</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-widest px-1" style={{ color: '#86868B' }}>Services</h2>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -123,9 +114,9 @@ const Index = () => {
             ))}
           </motion.div>
           {services.length === 0 && (
-            <div className="ios-liquid-glass p-12 text-center">
+            <div className="safari-clean-glass p-12 text-center">
               <div className="surface-sheen" />
-              <p className="text-muted-foreground text-sm relative z-10">No services configured yet. Add them from the admin panel.</p>
+              <p className="text-sm relative z-10" style={{ color: '#86868B' }}>No services configured yet. Add them from the admin panel.</p>
             </div>
           )}
         </div>

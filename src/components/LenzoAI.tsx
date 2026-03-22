@@ -51,11 +51,14 @@ export const LenzoAI = () => {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setOpen(!open)}
-        className="fixed bottom-4 left-4 z-40 ios-liquid-glass h-14 w-14 flex items-center justify-center"
+        className="fixed bottom-4 left-4 z-40 safari-clean-glass h-14 w-14 flex items-center justify-center"
         style={{ borderRadius: '999px' }}
       >
         <div className="surface-sheen" style={{ borderRadius: '999px' }} />
-        {open ? <X className="h-6 w-6 text-primary relative z-10" /> : <MessageCircle className="h-6 w-6 text-primary relative z-10" />}
+        {open
+          ? <X className="h-6 w-6 relative z-10" style={{ color: '#007AFF' }} />
+          : <MessageCircle className="h-6 w-6 relative z-10" style={{ color: '#007AFF' }} />
+        }
       </motion.button>
 
       {/* Chat panel */}
@@ -65,15 +68,15 @@ export const LenzoAI = () => {
             initial={{ opacity: 0, x: -100, scale: 0.9 }}
             animate={{ opacity: 1, x: 0, scale: 1 }}
             exit={{ opacity: 0, x: -100, scale: 0.9 }}
-            className="fixed bottom-20 left-4 z-40 ios-liquid-glass w-80 sm:w-96 h-[28rem] flex flex-col"
+            className="fixed bottom-20 left-4 z-40 safari-clean-glass w-80 sm:w-96 h-[28rem] flex flex-col"
             style={{ borderRadius: '28px' }}
           >
             <div className="surface-sheen" style={{ borderRadius: '28px' }} />
             {/* Header */}
-            <div className="p-4 border-b border-white/10 flex items-center gap-2 relative z-10">
-              <Bot className="h-5 w-5 text-primary" />
-              <span className="font-bold text-foreground">Lenzo AI</span>
-              <span className="text-xs text-muted-foreground ml-auto">Powered by AI</span>
+            <div className="p-4 flex items-center gap-2 relative z-10" style={{ borderBottom: '1px solid rgba(0,0,0,0.06)' }}>
+              <Bot className="h-5 w-5" style={{ color: '#007AFF' }} />
+              <span className="font-bold" style={{ color: '#1D1D1F' }}>Lenzo AI</span>
+              <span className="text-xs ml-auto" style={{ color: '#86868B' }}>Powered by AI</span>
             </div>
 
             {/* Messages */}
@@ -81,30 +84,30 @@ export const LenzoAI = () => {
               {messages.map((m, i) => (
                 <div key={i} className={`flex gap-2 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   {m.role === 'assistant' && (
-                    <div className="h-7 w-7 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
-                      <Bot className="h-4 w-4 text-primary" />
+                    <div className="h-7 w-7 rounded-full flex items-center justify-center shrink-0" style={{ background: 'rgba(0,122,255,0.1)' }}>
+                      <Bot className="h-4 w-4" style={{ color: '#007AFF' }} />
                     </div>
                   )}
                   <div className={`max-w-[75%] rounded-2xl px-3 py-2 text-sm ${
                     m.role === 'user'
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-muted/60 text-foreground'
-                  }`}>
+                      ? 'text-white'
+                      : ''
+                  }`} style={m.role === 'user' ? { background: '#007AFF' } : { background: 'rgba(0,0,0,0.04)', color: '#1D1D1F' }}>
                     {m.content}
                   </div>
                   {m.role === 'user' && (
-                    <div className="h-7 w-7 rounded-full bg-muted flex items-center justify-center shrink-0">
-                      <User className="h-4 w-4 text-foreground" />
+                    <div className="h-7 w-7 rounded-full flex items-center justify-center shrink-0" style={{ background: 'rgba(0,0,0,0.04)' }}>
+                      <User className="h-4 w-4" style={{ color: '#1D1D1F' }} />
                     </div>
                   )}
                 </div>
               ))}
               {loading && (
                 <div className="flex gap-2">
-                  <div className="h-7 w-7 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
-                    <Bot className="h-4 w-4 text-primary" />
+                  <div className="h-7 w-7 rounded-full flex items-center justify-center shrink-0" style={{ background: 'rgba(0,122,255,0.1)' }}>
+                    <Bot className="h-4 w-4" style={{ color: '#007AFF' }} />
                   </div>
-                  <div className="bg-muted/60 rounded-2xl px-3 py-2 text-sm text-muted-foreground">
+                  <div className="rounded-2xl px-3 py-2 text-sm" style={{ background: 'rgba(0,0,0,0.04)', color: '#86868B' }}>
                     Thinking...
                   </div>
                 </div>
@@ -112,18 +115,20 @@ export const LenzoAI = () => {
             </div>
 
             {/* Input */}
-            <div className="p-3 border-t border-white/10 flex gap-2 relative z-10">
+            <div className="p-3 flex gap-2 relative z-10" style={{ borderTop: '1px solid rgba(0,0,0,0.06)' }}>
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && send()}
                 placeholder="Ask Lenzo AI..."
-                className="flex-1 bg-muted/40 rounded-full px-4 py-2 text-sm text-foreground placeholder:text-muted-foreground outline-none border border-white/10 focus:border-primary"
+                className="flex-1 rounded-full px-4 py-2 text-sm outline-none"
+                style={{ background: 'rgba(0,0,0,0.04)', color: '#1D1D1F', border: '1px solid rgba(0,0,0,0.06)' }}
               />
               <button
                 onClick={send}
                 disabled={loading || !input.trim()}
-                className="h-9 w-9 rounded-full bg-primary flex items-center justify-center text-primary-foreground disabled:opacity-50 hover:bg-primary/80 transition-colors"
+                className="h-9 w-9 rounded-full flex items-center justify-center text-white disabled:opacity-50 transition-colors"
+                style={{ background: '#007AFF' }}
               >
                 <Send className="h-4 w-4" />
               </button>

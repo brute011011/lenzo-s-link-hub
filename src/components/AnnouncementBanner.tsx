@@ -23,18 +23,19 @@ export const AnnouncementBanner = ({ announcements }: { announcements: Announcem
             initial={{ opacity: 0, y: -20, height: 0 }}
             animate={{ opacity: 1, y: 0, height: 'auto' }}
             exit={{ opacity: 0, y: -20, height: 0 }}
-            className="ios-liquid-glass p-5"
+            className="safari-clean-glass p-5"
           >
             <div className="surface-sheen" />
             <div className="flex items-start gap-3 relative z-10">
-              <Bell className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+              <Bell className="h-5 w-5 mt-0.5 shrink-0" style={{ color: '#007AFF' }} />
               <div className="flex-1 min-w-0">
-                <h4 className="font-bold text-foreground text-sm">{a.title}</h4>
-                <p className="text-muted-foreground text-sm mt-1">{a.content}</p>
+                <h4 className="font-bold text-sm" style={{ color: '#1D1D1F' }}>{a.title}</h4>
+                <p className="text-sm mt-1" style={{ color: '#86868B' }}>{a.content}</p>
               </div>
               <button
                 onClick={() => setDismissed(prev => new Set(prev).add(a.id))}
-                className="text-muted-foreground hover:text-foreground transition-colors shrink-0"
+                className="shrink-0 transition-colors"
+                style={{ color: '#86868B' }}
               >
                 <X className="h-4 w-4" />
               </button>

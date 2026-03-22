@@ -27,61 +27,57 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 relative overflow-hidden dark" style={{
-      background: 'linear-gradient(135deg, #0a0a2e 0%, #1a0533 25%, #0d1b3e 50%, #1c0a3a 75%, #050520 100%)'
-    }}>
-      <div className="bg-orb w-96 h-96 top-20 -left-48" style={{ background: 'radial-gradient(circle, hsla(211, 100%, 55%, 0.2), transparent 70%)' }} />
-      <div className="bg-orb w-64 h-64 bottom-20 -right-32" style={{ background: 'radial-gradient(circle, hsla(280, 90%, 50%, 0.15), transparent 70%)' }} />
-      <div className="noise-overlay" />
-
+    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: '#F5F5F7' }}>
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="ios-liquid-glass w-full max-w-md p-8 relative z-10"
+        className="safari-clean-glass w-full max-w-md p-8 relative z-10"
       >
         <div className="surface-sheen" />
         <div className="relative z-10">
           <div className="text-center mb-8">
-            <div className="h-16 w-16 rounded-2xl bg-primary/20 flex items-center justify-center mx-auto mb-4">
-              <Lock className="h-8 w-8 text-primary" />
+            <div className="h-16 w-16 rounded-2xl flex items-center justify-center mx-auto mb-4" style={{ background: 'rgba(0,122,255,0.1)' }}>
+              <Lock className="h-8 w-8" style={{ color: '#007AFF' }} />
             </div>
-            <h1 className="text-2xl font-bold text-foreground">Admin Access</h1>
-            <p className="text-muted-foreground text-sm mt-1">Lenzo Beam Central Panel</p>
+            <h1 className="text-2xl font-bold" style={{ color: '#1D1D1F' }}>Admin Access</h1>
+            <p className="text-sm mt-1" style={{ color: '#86868B' }}>Lenzo Beam Central Panel</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="flex items-center gap-2 rounded-2xl bg-destructive/10 border border-destructive/30 p-3 text-sm text-destructive">
+              <div className="flex items-center gap-2 rounded-2xl p-3 text-sm" style={{ background: 'rgba(255,59,48,0.08)', color: '#FF3B30', border: '1px solid rgba(255,59,48,0.15)' }}>
                 <AlertCircle className="h-4 w-4 shrink-0" />
                 {error}
               </div>
             )}
 
             <div>
-              <label className="text-sm font-medium text-foreground mb-1.5 block">Email</label>
+              <label className="text-sm font-medium mb-1.5 block" style={{ color: '#1D1D1F' }}>Email</label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: '#86868B' }} />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full rounded-full bg-muted/40 border border-white/10 pl-10 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors"
+                  className="w-full rounded-full pl-10 pr-4 py-2.5 text-sm outline-none transition-colors"
+                  style={{ background: 'rgba(0,0,0,0.04)', color: '#1D1D1F', border: '1px solid rgba(0,0,0,0.06)' }}
                   placeholder="admin@lenzo.dev"
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-sm font-medium text-foreground mb-1.5 block">Password</label>
+              <label className="text-sm font-medium mb-1.5 block" style={{ color: '#1D1D1F' }}>Password</label>
               <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4" style={{ color: '#86868B' }} />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full rounded-full bg-muted/40 border border-white/10 pl-10 pr-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition-colors"
+                  className="w-full rounded-full pl-10 pr-4 py-2.5 text-sm outline-none transition-colors"
+                  style={{ background: 'rgba(0,0,0,0.04)', color: '#1D1D1F', border: '1px solid rgba(0,0,0,0.06)' }}
                   placeholder="••••••••"
                 />
               </div>
@@ -90,7 +86,8 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full pill-btn bg-primary py-2.5 font-bold text-primary-foreground hover:bg-primary/80 disabled:opacity-50"
+              className="w-full pill-btn py-2.5 font-bold text-white disabled:opacity-50"
+              style={{ background: '#007AFF' }}
             >
               {loading ? 'Authenticating...' : 'Sign In'}
             </button>
