@@ -23,9 +23,9 @@ export const Footer = () => (
         © {new Date().getFullYear()} Lenzo Beam Central — Built by <a href="https://discord.com/users/3r89" target="_blank" rel="noopener noreferrer" className="text-foreground font-medium hover:text-primary transition-colors">@3r89</a>
       </p>
       <div className="flex items-center gap-4">
-        <a href="https://discord.gg/your-server" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors"><DiscordIcon /></a>
+        <a href="https://discord.com/users/3r89" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors"><DiscordIcon /></a>
         <a href="https://tiktok.com/@qsi.uk" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors"><TikTokIcon /></a>
-        <a href="https://instagram.com/qsi.uk2" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors"><InstagramIcon /></a>
+        <a href="https://instagram.com/qsi.uk" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors"><InstagramIcon /></a>
       </div>
     </div>
   </footer>
