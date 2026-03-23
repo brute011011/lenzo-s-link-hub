@@ -23,7 +23,7 @@ export const AnnouncementBanner = ({ announcements }: { announcements: Announcem
             initial={{ opacity: 0, y: -20, height: 0 }}
             animate={{ opacity: 1, y: 0, height: 'auto' }}
             exit={{ opacity: 0, y: -20, height: 0 }}
-            className="safari-clean-glass p-5"
+            className="safari-clean-glass-sm p-4"
           >
             <div className="surface-sheen" />
             <div className="flex items-start gap-3 relative z-10">
