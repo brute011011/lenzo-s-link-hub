@@ -7,6 +7,7 @@ import { AnnouncementBanner } from '@/components/AnnouncementBanner';
 import { MusicPlayer } from '@/components/MusicPlayer';
 import { LenzoAI } from '@/components/LenzoAI';
 import { Footer } from '@/components/Footer';
+import { LiquidGlassOverlay } from '@/components/LiquidGlassOverlay';
 import { Link } from 'react-router-dom';
 import { Shield } from 'lucide-react';
 import type { Tables } from '@/integrations/supabase/types';
@@ -48,7 +49,7 @@ const Index = () => {
   const discordInvite = settings.discord_invite || 'https://discord.gg/your-server';
 
   return (
-    <div className="min-h-screen relative" style={{ background: '#F5F5F7' }}>
+    <div className="min-h-screen relative main-content" style={{ background: '#F5F5F7' }}>
       {/* Admin link */}
       <div className="fixed top-4 right-4 z-50">
         <Link
@@ -129,6 +130,7 @@ const Index = () => {
       </div>
 
       {/* Floating components */}
+      <LiquidGlassOverlay />
       <MusicPlayer dbTracks={musicTracks.length > 0 ? musicTracks.map(t => ({
         id: t.id,
         title: t.title,
