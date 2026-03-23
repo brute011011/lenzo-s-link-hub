@@ -130,6 +130,7 @@ const Index = () => {
       </div>
 
       {/* Floating components */}
+      <LiquidGlassOverlay />
       <MusicPlayer dbTracks={musicTracks.length > 0 ? musicTracks.map(t => ({
         id: t.id,
         title: t.title,
