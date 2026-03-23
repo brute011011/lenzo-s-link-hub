@@ -71,10 +71,43 @@
    Clean Apple Safari Glass
    ========================================== */
 
+/* Default: medium containers (chat panels, music player, discord section) */
 .safari-clean-glass {
   background: rgba(255, 255, 255, 0.45) !important;
   backdrop-filter: blur(35px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(35px) saturate(180%) !important;
+  border-radius: 22px !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+  border-top: 1.5px solid rgba(255, 255, 255, 0.8) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04) !important;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.safari-clean-glass:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Small: buttons, pills, compact items */
+.safari-clean-glass-sm {
+  background: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(30px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
+  border-radius: 14px !important;
+  border: 1px solid rgba(0, 0, 0, 0.04) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Large: hero sections, big panels */
+.safari-clean-glass-lg {
+  background: rgba(255, 255, 255, 0.45) !important;
+  backdrop-filter: blur(40px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(180%) !important;
   border-radius: 32px !important;
   border: 1px solid rgba(0, 0, 0, 0.05) !important;
   border-top: 1.5px solid rgba(255, 255, 255, 0.8) !important;
@@ -82,10 +115,6 @@
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
-}
-
-.safari-clean-glass:hover {
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.06) !important;
 }
 
 .surface-sheen {
