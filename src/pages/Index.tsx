@@ -49,7 +49,7 @@ const Index = () => {
   const discordInvite = settings.discord_invite || 'https://discord.gg/your-server';
 
   return (
-    <div className="min-h-screen relative" style={{ background: '#F5F5F7' }}>
+    <div className="min-h-screen relative main-content" style={{ background: '#F5F5F7' }}>
       {/* Admin link */}
       <div className="fixed top-4 right-4 z-50">
         <Link
