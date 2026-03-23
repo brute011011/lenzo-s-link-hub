@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 declare global {
   interface Window {
     liquidGL: any;
+    html2canvas: any;
   }
 }
 
