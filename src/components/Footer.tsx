@@ -1,3 +1,5 @@
+import { LiquidGlassCard } from '@/components/LiquidGlassCard';
+
 const DiscordIcon = () => (
   <svg width="18" height="14" viewBox="0 0 71 55" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M60.1 4.9A58.5 58.5 0 0 0 45.4.2a.2.2 0 0 0-.2.1 41 41 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37 37 0 0 0 25.4.3a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.5 5a.2.2 0 0 0-.1 0C1.5 17.6-.9 29.8.3 41.9v.1a58.7 58.7 0 0 0 17.7 9 .2.2 0 0 0 .3-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.6 38.6 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.9a.2.2 0 0 1 .2 0 41.9 41.9 0 0 0 35.6 0 .2.2 0 0 1 .2 0l1.1.9a.2.2 0 0 1 0 .3 36.2 36.2 0 0 1-5.5 2.7.2.2 0 0 0-.1.3 47.2 47.2 0 0 0 3.6 5.8.2.2 0 0 0 .2.1A58.5 58.5 0 0 0 70.3 42v-.1c1.4-14.5-2.4-27.1-10.1-38.2a.2.2 0 0 0-.1 0ZM23.7 34.4c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6.1 3 6 6.7c0 3.7-2.6 6.7-6 6.7Zm22.2 0c-3.3 0-6-3-6-6.7s2.6-6.7 6-6.7 6 3 6 6.7c0 3.7-2.6 6.7-6 6.7Z" fill="currentColor"/>
@@ -17,17 +19,18 @@ const InstagramIcon = () => (
 );
 
 export const Footer = () => (
-  <footer className="liquidGL safari-clean-glass py-8 px-6">
-    <div className="surface-sheen" style={{ borderRadius: '22px' }} />
-    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
-      <p className="text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Lenzo Beam Central — Built by <a href="https://discord.com/users/3r89" target="_blank" rel="noopener noreferrer" className="text-foreground font-medium hover:text-primary transition-colors">@3r89</a>
-      </p>
-      <div className="flex items-center gap-4">
-        <a href="https://discord.com/users/3r89" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors"><DiscordIcon /></a>
-        <a href="https://tiktok.com/@qsi.uk" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors"><TikTokIcon /></a>
-        <a href="https://instagram.com/qsi.uk" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors"><InstagramIcon /></a>
+  <LiquidGlassCard>
+    <footer className="py-8 px-6">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p className="text-xs" style={{ color: '#86868B' }}>
+          © {new Date().getFullYear()} Lenzo Beam Central — Built by <a href="https://discord.com/users/3r89" target="_blank" rel="noopener noreferrer" className="font-medium hover:opacity-70 transition-opacity" style={{ color: '#1D1D1F' }}>@3r89</a>
+        </p>
+        <div className="flex items-center gap-4">
+          <a href="https://discord.com/users/3r89" target="_blank" rel="noopener noreferrer" className="transition-opacity hover:opacity-70" style={{ color: '#86868B' }}><DiscordIcon /></a>
+          <a href="https://tiktok.com/@qsi.uk" target="_blank" rel="noopener noreferrer" className="transition-opacity hover:opacity-70" style={{ color: '#86868B' }}><TikTokIcon /></a>
+          <a href="https://instagram.com/qsi.uk" target="_blank" rel="noopener noreferrer" className="transition-opacity hover:opacity-70" style={{ color: '#86868B' }}><InstagramIcon /></a>
+        </div>
       </div>
-    </div>
-  </footer>
+    </footer>
+  </LiquidGlassCard>
 );

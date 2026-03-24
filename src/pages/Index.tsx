@@ -7,7 +7,7 @@ import { AnnouncementBanner } from '@/components/AnnouncementBanner';
 import { MusicPlayer } from '@/components/MusicPlayer';
 import { LenzoAI } from '@/components/LenzoAI';
 import { Footer } from '@/components/Footer';
-import { LiquidGlassOverlay } from '@/components/LiquidGlassOverlay';
+
 import { Link } from 'react-router-dom';
 import { Shield } from 'lucide-react';
 import type { Tables } from '@/integrations/supabase/types';
@@ -130,7 +130,7 @@ const Index = () => {
       </div>
 
       {/* Floating components */}
-      <LiquidGlassOverlay />
+      {/* Liquid glass is now built into each card */}
       <MusicPlayer dbTracks={musicTracks.length > 0 ? musicTracks.map(t => ({
         id: t.id,
         title: t.title,

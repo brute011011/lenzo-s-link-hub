@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { LiquidGlassCard } from '@/components/LiquidGlassCard';
 
 const DiscordLogo = () => (
   <svg width="28" height="22" viewBox="0 0 71 55" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -16,30 +17,30 @@ export const DiscordSection = ({ inviteLink }: DiscordSectionProps) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className="liquidGL safari-clean-glass-lg p-8 text-center"
     >
-      <div className="surface-sheen" />
-      <div className="relative z-10">
-        <div className="flex items-center justify-center mb-4">
-          <div className="h-14 w-14 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(88,101,242,0.1)', color: '#5865F2' }}>
-            <DiscordLogo />
+      <LiquidGlassCard className="text-center">
+        <div className="p-8">
+          <div className="flex items-center justify-center mb-4">
+            <div className="h-14 w-14 rounded-2xl flex items-center justify-center" style={{ background: 'rgba(88,101,242,0.1)', color: '#5865F2' }}>
+              <DiscordLogo />
+            </div>
           </div>
+          <h2 className="text-2xl font-bold mb-2" style={{ color: '#1D1D1F' }}>Join Our Community</h2>
+          <p className="text-sm mb-6 max-w-md mx-auto" style={{ color: '#86868B' }}>
+            Connect with other users, get support, and stay updated with the latest news.
+          </p>
+          <a
+            href={inviteLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2.5 pill-btn px-7 py-3 text-sm font-bold text-white active:scale-[0.98]"
+            style={{ background: '#5865F2' }}
+          >
+            <DiscordLogo />
+            Join Discord Server
+          </a>
         </div>
-        <h2 className="text-2xl font-bold mb-2" style={{ color: '#1D1D1F' }}>Join Our Community</h2>
-        <p className="text-sm mb-6 max-w-md mx-auto" style={{ color: '#86868B' }}>
-          Connect with other users, get support, and stay updated with the latest news.
-        </p>
-        <a
-          href={inviteLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2.5 pill-btn px-7 py-3 text-sm font-bold text-white active:scale-[0.98]"
-          style={{ background: '#5865F2' }}
-        >
-          <DiscordLogo />
-          Join Discord Server
-        </a>
-      </div>
+      </LiquidGlassCard>
     </motion.div>
   );
 };
