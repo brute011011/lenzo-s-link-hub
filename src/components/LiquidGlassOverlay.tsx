@@ -24,12 +24,12 @@ export const LiquidGlassOverlay = () => {
         window.liquidGL({
           snapshot: '.main-content',
           target: '.liquidGL',
-          resolution: 2.0,
-          refraction: 0.01,
-          bevelDepth: 0.052,
-          bevelWidth: 0.211,
-          frost: 2,
-          shadow: true,
+          resolution: 1.5,
+          refraction: 0.008,
+          bevelDepth: 0.04,
+          bevelWidth: 0.15,
+          frost: 2.5,
+          shadow: false,
           specular: true,
           reveal: 'fade',
           tilt: false,
@@ -43,7 +43,6 @@ export const LiquidGlassOverlay = () => {
       }
     };
 
-    // Wait for content to render + scripts to load
     const timeout = setTimeout(() => {
       let attempts = 0;
       const interval = setInterval(() => {
@@ -56,21 +55,6 @@ export const LiquidGlassOverlay = () => {
     return () => clearTimeout(timeout);
   }, []);
 
-  return (
-    <div
-      className="liquidGL"
-      style={{
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: '90vw',
-        maxWidth: '1100px',
-        height: '80vh',
-        borderRadius: '28px',
-        zIndex: 5,
-        pointerEvents: 'none',
-      }}
-    />
-  );
+  // No standalone overlay — liquidGL targets individual .liquidGL elements
+  return null;
 };

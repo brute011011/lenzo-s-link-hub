@@ -17,8 +17,8 @@ const InstagramIcon = () => (
 );
 
 export const Footer = () => (
-  <footer className="safari-clean-glass py-8 px-6">
-    <div className="surface-sheen" style={{ borderRadius: '32px' }} />
+  <footer className="liquidGL safari-clean-glass py-8 px-6">
+    <div className="surface-sheen" style={{ borderRadius: '22px' }} />
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4 relative z-10">
       <p className="text-xs text-muted-foreground">
         © {new Date().getFullYear()} Lenzo Beam Central — Built by <a href="https://discord.com/users/3r89" target="_blank" rel="noopener noreferrer" className="text-foreground font-medium hover:text-primary transition-colors">@3r89</a>

@@ -16,7 +16,7 @@ export const DiscordSection = ({ inviteLink }: DiscordSectionProps) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      className="safari-clean-glass-lg p-8 text-center"
+      className="liquidGL safari-clean-glass-lg p-8 text-center"
     >
       <div className="surface-sheen" />
       <div className="relative z-10">
