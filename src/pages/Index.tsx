@@ -130,7 +130,7 @@ const Index = () => {
       </div>
 
       {/* Floating components */}
-      <LiquidGlassOverlay />
+      {/* Liquid glass is now built into each card */}
       <MusicPlayer dbTracks={musicTracks.length > 0 ? musicTracks.map(t => ({
         id: t.id,
         title: t.title,
