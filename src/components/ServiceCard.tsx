@@ -16,7 +16,7 @@ export const ServiceCard = ({ name, url, description, status, latencyMs }: Servi
     <motion.div
       whileHover={{ scale: 1.01, y: -2 }}
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-      className="safari-clean-glass-sm group p-5 relative"
+      className="liquidGL safari-clean-glass-sm group p-5 relative"
     >
       <div className="surface-sheen" />
       <div className="relative z-10">
