@@ -26,7 +26,7 @@ export const LiquidGlassCard: FC<LiquidGlassCardProps> = ({
   children,
   className = '',
   backdropBlur = 40,
-  tintColor = 'rgba(255, 255, 255, 0.02)',
+  tintColor = 'rgba(255, 255, 255, 0.05)',
   displacementScale = 150,
   turbulenceBaseFrequency = '0.008 0.008',
   turbulenceSeed = 1.5,

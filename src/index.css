@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    --background: 240 5% 97%;
+    --background: 240 5% 96%;
     --foreground: 240 10% 12%;
 
     --card: 0 0% 100%;
@@ -36,7 +36,37 @@
 
     --radius: 0.75rem;
 
-    --sidebar-background: 240 5% 97%;
+    --sidebar-background: 240 5% 96%;
+    --sidebar-foreground: 240 10% 12%;
+    --sidebar-primary: 211 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 5% 92%;
+    --sidebar-accent-foreground: 240 10% 12%;
+    --sidebar-border: 240 6% 90%;
+    --sidebar-ring: 211 100% 50%;
+  }
+
+  .dark {
+    --background: 240 5% 96%;
+    --foreground: 240 10% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 12%;
+    --primary: 211 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 5% 92%;
+    --secondary-foreground: 240 10% 12%;
+    --muted: 240 5% 92%;
+    --muted-foreground: 240 4% 46%;
+    --accent: 211 100% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 211 100% 50%;
+    --sidebar-background: 240 5% 96%;
     --sidebar-foreground: 240 10% 12%;
     --sidebar-primary: 211 100% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
@@ -73,9 +103,9 @@
 
 /* Default: medium containers (chat panels, music player, discord section) */
 .safari-clean-glass {
-  background: rgba(255, 255, 255, 0.45) !important;
-  backdrop-filter: blur(35px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(35px) saturate(180%) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(40px) saturate(210%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(210%) !important;
   border-radius: 22px !important;
   border: 1px solid rgba(0, 0, 0, 0.05) !important;
   border-top: 1.5px solid rgba(255, 255, 255, 0.8) !important;
@@ -91,9 +121,9 @@
 
 /* Small: buttons, pills, compact items */
 .safari-clean-glass-sm {
-  background: rgba(255, 255, 255, 0.45) !important;
-  backdrop-filter: blur(30px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(40px) saturate(210%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(210%) !important;
   border-radius: 14px !important;
   border: 1px solid rgba(0, 0, 0, 0.04) !important;
   border-top: 1px solid rgba(255, 255, 255, 0.7) !important;
@@ -105,9 +135,9 @@
 
 /* Large: hero sections, big panels */
 .safari-clean-glass-lg {
-  background: rgba(255, 255, 255, 0.45) !important;
-  backdrop-filter: blur(40px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(40px) saturate(180%) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(40px) saturate(210%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(210%) !important;
   border-radius: 32px !important;
   border: 1px solid rgba(0, 0, 0, 0.05) !important;
   border-top: 1.5px solid rgba(255, 255, 255, 0.8) !important;
