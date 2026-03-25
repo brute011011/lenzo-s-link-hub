@@ -8,7 +8,7 @@
     color: #1D1D1F !important;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif !important;
     -webkit-font-smoothing: antialiased;
-    letter-spacing: -0.022em;
+    letter-spacing: -0.025em;
     overflow-x: hidden;
   }
 }
@@ -17,13 +17,8 @@
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: 
-    radial-gradient(at 0% 0%, rgba(0, 122, 255, 0.07) 0px, transparent 40%),
-    radial-gradient(at 100% 100%, rgba(88, 86, 214, 0.05) 0px, transparent 40%),
-    #F5F5F7;
-  pointer-events: none;
+  background: radial-gradient(at 0% 0%, rgba(0, 122, 255, 0.07) 0px, transparent 40%), radial-gradient(at 100% 100%, rgba(88, 86, 214, 0.05) 0px, transparent 40%), #F5F5F7;
 }
 
-h1 { letter-spacing: -0.055em !important; font-weight: 900 !important; }
-h3 { letter-spacing: -0.035em !important; font-weight: 700 !important; }
-::-webkit-scrollbar { display: none; }
+h1 { letter-spacing: -0.06em !important; font-weight: 900 !important; }
+h3 { letter-spacing: -0.04em !important; font-weight: 700 !important; }
