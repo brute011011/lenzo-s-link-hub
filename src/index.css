@@ -2,15 +2,21 @@
 .glass-refraction {
   position: absolute;
   inset: 0;
-  /* Bumping saturation to 240% for that 'wet' look */
-  backdrop-filter: blur(60px) saturate(240%) brightness(1.12);
-  -webkit-backdrop-filter: blur(60px) saturate(240%) brightness(1.12);
+  /* THE SECRET: Over-saturating the background colors makes them bleed like water */
+  backdrop-filter: blur(60px) saturate(240%) brightness(1.1);
+  -webkit-backdrop-filter: blur(60px) saturate(240%) brightness(1.1);
   
-  /* DROPPING opacity to 1% to remove the 'milky' white look */
-  background: linear-gradient(
-    135deg, 
-    rgba(255, 255, 255, 0.08) 0%, 
-    rgba(255, 255, 255, 0.01) 50%, 
-    rgba(255, 255, 255, 0.08) 100%
-  ) !important;
+  /* THE TRANSPARENCY: 1% opacity so the mesh colors pop through */
+  background: rgba(255, 255, 255, 0.01) !important;
+}
+
+/* THE CAUSTIC GRAIN: This adds the physical texture of glass */
+.glass-refraction::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+  pointer-events: none;
 }
