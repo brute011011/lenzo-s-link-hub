@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
 import { ServiceCard } from '@/components/ServiceCard';
+import { LiquidGlassCard } from '@/components/LiquidGlassCard';
 import { DiscordSection } from '@/components/DiscordSection';
 import { AnnouncementBanner } from '@/components/AnnouncementBanner';
 import { MusicPlayer } from '@/components/MusicPlayer';
