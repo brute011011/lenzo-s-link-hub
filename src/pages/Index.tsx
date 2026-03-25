@@ -118,7 +118,7 @@ const Index = () => {
           {services.length === 0 && (
             <LiquidGlassCard className="p-12 text-center">
               <p className="text-sm" style={{ color: '#86868B' }}>No services configured yet. Add them from the admin panel.</p>
-            </div>
+            </LiquidGlassCard>
           )}
         </div>
 
