@@ -19,21 +19,83 @@ export const LiquidGlassCard: FC<LiquidGlassCardProps> = ({
 
   return (
     <>
-      {/* SVG Refraction + Chromatic Aberration Engine */}
+      {/* OPTIMIZED GPU ENGINE */}
       <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }} aria-hidden="true">
         <defs>
-          <filter
-            id={cleanId}
-            x="-10%"
-            y="-10%"
-            width="120%"
-            height="120%"
-            filterUnits="objectBoundingBox"
-            colorInterpolationFilters="sRGB"
-          >
+          <filter id={cleanId} x="-20%" y="-20%" width="140%" height="140%">
+            {/* Reduced Octaves to 1 for Massive Performance Boost */}
             <feTurbulence
               type="fractalNoise"
-              baseFrequency="0.015"
+              baseFrequency="0.012"
+              numOctaves={1} 
+              seed={2}
+              result="noise"
+            />
+            {/* Smoothing the noise to make it look like water, not static */}
+            <feGaussianBlur in="noise" stdDeviation="2" result="softNoise" />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="softNoise"
+              scale={15} 
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+        </defs>
+      </svg>
+
+      <Component
+        className={className}
+        style={{
+          position: 'relative',
+          borderRadius: '44px',
+          /* Hardware Acceleration */
+          transform: 'translateZ(0)',
+          willChange: 'filter, backdrop-filter',
+          transition: 'transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)',
+          ...style,
+        }}
+        {...rest}
+      >
+        {/* The Liquid Backdrop - Reduced opacity to 0.005 to kill 'milkiness' */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 0,
+            borderRadius: 'inherit',
+            background: 'rgba(255, 255, 255, 0.005)',
+            backdropFilter: 'blur(40px) saturate(210%) brightness(1.1)',
+            WebkitBackdropFilter: 'blur(40px) saturate(210%) brightness(1.1)',
+            filter: `url(#${cleanId})`,
+            /* Prevents the 'box' from clipping weirdly */
+            margin: '-2px',
+          }}
+        />
+
+        {/* 3D Glass Edge/Lip */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            pointerEvents: 'none',
+            zIndex: 1,
+            borderRadius: 'inherit',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderTop: '2.5px solid rgba(255, 255, 255, 0.8)',
+            borderLeft: '1.5px solid rgba(255, 255, 255, 0.6)',
+            boxShadow: 'inset 0 1px 2px rgba(255, 255, 255, 0.3)',
+          }}
+        />
+
+        {/* Sharp Content Layer */}
+        <div style={{ position: 'relative', zIndex: 2 }}>
+          {children}
+        </div>
+      </Component>
+    </>
+  );
+};
               numOctaves={3}
               seed={2}
               result="noise"
