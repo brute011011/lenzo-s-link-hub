@@ -1,5 +1,4 @@
 import { FC, ReactNode, ElementType, HTMLAttributes, useId } from 'react';
-import { RefractionEngine } from './glass/RefractionEngine';
 
 export const LiquidGlassCard: FC<Omit<HTMLAttributes<HTMLElement>, 'as'> & { children?: ReactNode; as?: ElementType }> = ({
   children,
@@ -8,33 +7,33 @@ export const LiquidGlassCard: FC<Omit<HTMLAttributes<HTMLElement>, 'as'> & { chi
   style,
   ...rest
 }) => {
-  const id = useId().replace(/:/g, '');
   return (
     <Component
-      className={`relative overflow-hidden transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${className}`}
-      style={{ borderRadius: '48px', transform: 'translateZ(0)', ...style }}
+      className={`relative transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${className}`}
+      style={{ 
+        borderRadius: '38px', 
+        transform: 'translateZ(0)',
+        ...style 
+      }}
       {...rest}
     >
-      <RefractionEngine scale={28} />
-      
-      {/* Layer 1: The Refraction Engine */}
-      <div className="absolute inset-0 z-0" 
+      {/* The Actual Glass Layer */}
+      <div className="absolute inset-0 z-0"
         style={{
-          background: 'rgba(255, 255, 255, 0.0001)',
-          backdropFilter: 'blur(60px) saturate(210%) brightness(1.15)',
-          WebkitBackdropFilter: 'blur(60px) saturate(210%) brightness(1.15)',
-          filter: `url(#glass-filter-${id})`
-        }} 
+          background: 'rgba(255, 255, 255, 0.01)', // Almost zero white
+          backdropFilter: 'blur(40px) saturate(180%) brightness(1.05)',
+          WebkitBackdropFilter: 'blur(40px) saturate(180%) brightness(1.05)',
+          borderRadius: 'inherit',
+        }}
       />
-
-      {/* Layer 2: The Physical Bezel (The White Edge) */}
+      
+      {/* The Specular Rim Light (Top Edge) */}
       <div className="pointer-events-none absolute inset-0 z-10"
         style={{
           borderRadius: 'inherit',
-          border: '0.5px solid rgba(0, 0, 0, 0.1)',
-          borderTop: '3px solid rgba(255, 255, 255, 0.98)',
-          borderLeft: '1.5px solid rgba(255, 255, 255, 0.4)',
-          boxShadow: '0 20px 50px -12px rgba(0, 0, 0, 0.12), inset 0 1px 3px rgba(255, 255, 255, 0.5)',
+          border: '0.5px solid rgba(0, 0, 0, 0.05)',
+          borderTop: '2px solid rgba(255, 255, 255, 0.8)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.04)',
         }}
       />
       
