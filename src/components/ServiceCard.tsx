@@ -1,6 +1,5 @@
-import { ExternalLink, Zap } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { LiquidGlassCard } from '@/components/LiquidGlassCard';
+import { FC } from 'react';
+import { LiquidGlassCard } from './LiquidGlassCard';
 
 interface ServiceCardProps {
   name: string;
@@ -10,50 +9,23 @@ interface ServiceCardProps {
   latencyMs: number;
 }
 
-export const ServiceCard = ({ name, url, description, status, latencyMs }: ServiceCardProps) => {
-  const isOnline = status === 'online';
-
+export const ServiceCard: FC<ServiceCardProps> = ({ name, url, description, status, latencyMs }) => {
+  const isOnline = status.toLowerCase() === 'online';
   return (
-    <motion.div
-      whileHover={{ scale: 1.01, y: -2 }}
-      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-    >
-      <LiquidGlassCard>
-        <div className="p-5">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-lg font-bold" style={{ color: '#1D1D1F' }}>{name}</h3>
-            <div className="flex items-center gap-2.5">
-              <div className="flex items-center gap-1.5 text-xs font-mono rounded-full px-2.5 py-1" style={{ background: 'rgba(0,0,0,0.04)', color: '#86868B' }}>
-                <Zap className="h-3 w-3" />
-                {latencyMs}ms
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div
-                  className={`h-2 w-2 rounded-full ${
-                    isOnline ? 'bg-emerald-500 status-online' : 'bg-red-500 status-offline'
-                  }`}
-                />
-                <span className={`text-[10px] font-bold uppercase tracking-wider ${isOnline ? 'text-emerald-600' : 'text-red-500'}`}>
-                  {isOnline ? 'Live' : 'Down'}
-                </span>
-              </div>
-            </div>
+    <a href={url} target="_blank" rel="noopener noreferrer" className="block h-full">
+      <LiquidGlassCard className="p-6 h-full flex flex-col hover:scale-[1.02] transition-all duration-300">
+        <div className="flex justify-between items-start mb-4">
+          <h3 className="text-xl font-bold tracking-tight text-[#1D1D1F]">{name}</h3>
+          <div className={`px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-tighter ${isOnline ? 'bg-green-500/10 text-green-600' : 'bg-red-500/10 text-red-600'}`}>
+            {status}
           </div>
-          {description && (
-            <p className="text-sm mb-4 leading-relaxed line-clamp-2" style={{ color: '#86868B' }}>{description}</p>
-          )}
-          <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 pill-btn px-5 py-2.5 text-sm font-semibold text-white active:scale-[0.98]"
-            style={{ background: '#007AFF' }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            Launch <ExternalLink className="h-3.5 w-3.5" />
-          </a>
+        </div>
+        <p className="text-sm text-[#86868B] flex-grow leading-relaxed">{description}</p>
+        <div className="mt-6 pt-4 border-t border-black/[0.03] flex justify-between items-center">
+          <span className="text-[10px] font-bold text-[#007AFF]">{latencyMs}ms</span>
+          <span className="text-[10px] font-bold text-[#1D1D1F] opacity-30">CONNECT →</span>
         </div>
       </LiquidGlassCard>
-    </motion.div>
+    </a>
   );
 };
