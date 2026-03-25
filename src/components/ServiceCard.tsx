@@ -1,8 +1,17 @@
 import { FC } from 'react';
 import { LiquidGlassCard } from './LiquidGlassCard';
 
-export const ServiceCard: FC<{ name: string; url: string; description: string; status: string; latencyMs: number }> = ({ name, url, description, status, latencyMs }) => {
+interface ServiceCardProps {
+  name: string;
+  url: string;
+  description: string;
+  status: string;
+  latencyMs: number;
+}
+
+export const ServiceCard: FC<ServiceCardProps> = ({ name, url, description, status, latencyMs }) => {
   const isOnline = status.toLowerCase() === 'online';
+  
   return (
     <a href={url} target="_blank" rel="noopener noreferrer" className="block group">
       <LiquidGlassCard className="p-8 h-full flex flex-col transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-y-[-4px]">
@@ -13,10 +22,19 @@ export const ServiceCard: FC<{ name: string; url: string; description: string; s
              <span className="text-[10px] font-bold text-[#1D1D1F] tracking-tight uppercase">{status}</span>
           </div>
         </div>
-        <p className="text-[#86868B] text-[15px] leading-snug font-medium flex-grow">{description}</p>
-        <div className="mt-8 pt-5 border-t border-black/[0.04] flex justify-between items-center">
-          <span className="text-[11px] font-bold text-[#1D1D1F] opacity-40 tracking-tight">{latencyMs}MS RESPONSE</span>
-          <span className="text-[11px] font-bold text-[#007AFF] tracking-tight group-hover:translate-x-1 transition-transform">OPEN →</span>
+        
+        <p className="text-[#86868B] text-[15px] leading-snug font-medium flex-grow mb-8">
+          {description}
+        </p>
+
+        <div className="mt-auto pt-5 border-t border-black/[0.04] flex justify-between items-center">
+          <div className="flex flex-col">
+            <span className="text-[10px] font-black text-[#86868B] uppercase tracking-widest">Latency</span>
+            <span className="text-xs font-bold text-[#007AFF]">{latencyMs}MS RESPONSE</span>
+          </div>
+          <span className="text-[11px] font-bold text-[#1D1D1F] tracking-tight group-hover:translate-x-1 transition-transform">
+            CONNECT →
+          </span>
         </div>
       </LiquidGlassCard>
     </a>
