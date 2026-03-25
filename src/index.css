@@ -8,34 +8,24 @@
   :root {
     --background: 240 5% 96%;
     --foreground: 240 10% 12%;
-
     --card: 0 0% 100%;
     --card-foreground: 240 10% 12%;
-
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 12%;
-
     --primary: 211 100% 50%;
     --primary-foreground: 0 0% 100%;
-
     --secondary: 240 5% 92%;
     --secondary-foreground: 240 10% 12%;
-
     --muted: 240 5% 92%;
     --muted-foreground: 240 4% 46%;
-
     --accent: 211 100% 50%;
     --accent-foreground: 0 0% 100%;
-
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-
     --border: 240 6% 90%;
     --input: 240 6% 90%;
     --ring: 211 100% 50%;
-
     --radius: 0.75rem;
-
     --sidebar-background: 240 5% 96%;
     --sidebar-foreground: 240 10% 12%;
     --sidebar-primary: 211 100% 50%;
@@ -87,72 +77,55 @@
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    letter-spacing: -0.022em;
+    letter-spacing: -0.03em;
+    font-weight: 600;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
     font-weight: 700;
-    letter-spacing: -0.022em;
+    letter-spacing: -0.03em;
   }
 }
 
 /* ==========================================
-   Clean Apple Safari Glass
+   iOS 26 Liquid Glass Surface
    ========================================== */
 
-/* Default: medium containers (chat panels, music player, discord section) */
-.safari-clean-glass {
-  background: rgba(255, 255, 255, 0.05) !important;
-  backdrop-filter: blur(40px) saturate(210%) !important;
-  -webkit-backdrop-filter: blur(40px) saturate(210%) !important;
-  border-radius: 22px !important;
-  border: 1px solid rgba(0, 0, 0, 0.05) !important;
-  border-top: 1.5px solid rgba(255, 255, 255, 0.8) !important;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04) !important;
+.ios26-liquid-surface {
   position: relative;
+  background: rgba(255, 255, 255, 0.02) !important;
+  backdrop-filter: blur(50px) saturate(210%) brightness(1.1) !important;
+  -webkit-backdrop-filter: blur(50px) saturate(210%) brightness(1.1) !important;
+  filter: url(#ios26-refraction-filter) !important;
+  border-radius: 44px !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-top: 2.5px solid rgba(255, 255, 255, 0.7) !important;
+  border-left: 2.5px solid rgba(255, 255, 255, 0.6) !important;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 30px 60px rgba(0, 0, 0, 0.2) !important;
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.safari-clean-glass:hover {
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06) !important;
+.ios26-liquid-surface:hover {
+  transform: scale(1.008) translateY(-2px);
 }
 
-/* Small: buttons, pills, compact items */
-.safari-clean-glass-sm {
-  background: rgba(255, 255, 255, 0.05) !important;
-  backdrop-filter: blur(40px) saturate(210%) !important;
-  -webkit-backdrop-filter: blur(40px) saturate(210%) !important;
-  border-radius: 14px !important;
-  border: 1px solid rgba(0, 0, 0, 0.04) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.7) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03) !important;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
+.ios26-liquid-surface > * {
+  transform: translateZ(0);
+  filter: none !important;
 }
 
-/* Large: hero sections, big panels */
-.safari-clean-glass-lg {
-  background: rgba(255, 255, 255, 0.05) !important;
-  backdrop-filter: blur(40px) saturate(210%) !important;
-  -webkit-backdrop-filter: blur(40px) saturate(210%) !important;
-  border-radius: 32px !important;
-  border: 1px solid rgba(0, 0, 0, 0.05) !important;
-  border-top: 1.5px solid rgba(255, 255, 255, 0.8) !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04) !important;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.surface-sheen {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: 1;
+/* Mesh Gradient Background */
+.ios26-mesh-bg {
+  background-color: hsl(240, 5%, 96%) !important;
+  background-image:
+    radial-gradient(at 0% 0%, hsla(211, 100%, 50%, 0.3) 0px, transparent 50%),
+    radial-gradient(at 50% 0%, hsla(255, 60%, 60%, 0.3) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(211, 100%, 50%, 0.2) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(255, 60%, 60%, 0.2) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(211, 100%, 50%, 0.3) 0px, transparent 50%) !important;
+  background-attachment: fixed !important;
 }
 
 /* Status pulse */
