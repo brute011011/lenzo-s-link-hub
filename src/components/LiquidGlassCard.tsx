@@ -30,7 +30,7 @@ export const LiquidGlassCard: FC<Omit<HTMLAttributes<HTMLElement>, 'as'> & { chi
         }}
         {...rest}
       >
-        {/* The Glass - Ultra Sharp, Zero Milk */}
+        {/* Pure Glass Layer */}
         <div style={{
             position: 'absolute',
             inset: 0,
@@ -41,7 +41,7 @@ export const LiquidGlassCard: FC<Omit<HTMLAttributes<HTMLElement>, 'as'> & { chi
             filter: `url(#${cleanId})`,
           }}
         />
-        {/* Physical Glass Bezel (Light Catchers) */}
+        {/* iOS Light Catchers (The Bezel) */}
         <div style={{
             position: 'absolute',
             inset: 0,
