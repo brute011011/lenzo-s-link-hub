@@ -1,5 +1,5 @@
 import { FC, ReactNode, ElementType, HTMLAttributes, useId } from 'react';
-import { GlassEngine } from './glass/GlassEngine';
+import { RefractionEngine } from './glass/RefractionEngine';
 
 export const LiquidGlassCard: FC<Omit<HTMLAttributes<HTMLElement>, 'as'> & { children?: ReactNode; as?: ElementType }> = ({
   children,
@@ -8,34 +8,36 @@ export const LiquidGlassCard: FC<Omit<HTMLAttributes<HTMLElement>, 'as'> & { chi
   style,
   ...rest
 }) => {
-  const filterId = useId();
-  const engineId = `refraction-engine-${filterId.replace(/:/g, '')}`;
-
+  const id = useId().replace(/:/g, '');
   return (
     <Component
-      className={`relative overflow-hidden transition-all duration-700 ${className}`}
-      style={{ borderRadius: '44px', transform: 'translateZ(0)', ...style }}
+      className={`relative overflow-hidden transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${className}`}
+      style={{ borderRadius: '48px', transform: 'translateZ(0)', ...style }}
       {...rest}
     >
-      <GlassEngine scale={22} />
-      <div className="absolute inset-0 z-0"
+      <RefractionEngine scale={28} />
+      
+      {/* Layer 1: The Refraction Engine */}
+      <div className="absolute inset-0 z-0" 
         style={{
-          background: 'rgba(255, 255, 255, 0.001)',
-          backdropFilter: 'blur(50px) saturate(220%) brightness(1.1)',
-          WebkitBackdropFilter: 'blur(50px) saturate(220%) brightness(1.1)',
-          filter: `url(#${engineId})`
-        }}
+          background: 'rgba(255, 255, 255, 0.0001)',
+          backdropFilter: 'blur(60px) saturate(210%) brightness(1.15)',
+          WebkitBackdropFilter: 'blur(60px) saturate(210%) brightness(1.15)',
+          filter: `url(#glass-filter-${id})`
+        }} 
       />
-      {/* Specular Edge Bezel */}
+
+      {/* Layer 2: The Physical Bezel (The White Edge) */}
       <div className="pointer-events-none absolute inset-0 z-10"
         style={{
           borderRadius: 'inherit',
-          border: '0.5px solid rgba(0, 0, 0, 0.08)',
-          borderTop: '2.5px solid rgba(255, 255, 255, 0.95)',
-          borderLeft: '1px solid rgba(255, 255, 255, 0.4)',
-          boxShadow: '0 12px 40px -8px rgba(0, 0, 0, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.4)',
+          border: '0.5px solid rgba(0, 0, 0, 0.1)',
+          borderTop: '3px solid rgba(255, 255, 255, 0.98)',
+          borderLeft: '1.5px solid rgba(255, 255, 255, 0.4)',
+          boxShadow: '0 20px 50px -12px rgba(0, 0, 0, 0.12), inset 0 1px 3px rgba(255, 255, 255, 0.5)',
         }}
       />
+      
       <div className="relative z-20">{children}</div>
     </Component>
   );
