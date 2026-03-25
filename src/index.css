@@ -2,92 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
-@layer base {
-  :root {
-    --background: 240 5% 96%;
-    --foreground: 240 10% 12%;
-    --primary: 211 100% 50%;
-    --radius: 0.75rem;
-  }
-}
-
 @layer base {
   body {
-    @apply text-foreground;
-    background-color: #F5F5F7;
+    @apply bg-[#F5F5F7] text-[#1D1D1F] overflow-x-hidden;
     font-family: 'Inter', -apple-system, system-ui, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    letter-spacing: -0.03em;
-    overflow-x: hidden;
   }
 }
 
-/* --- THE LIQUID GLASS ENGINE (FIXED) --- */
-.ios26-liquid-surface {
-  position: relative;
-  /* Reduced opacity to 0.005 to kill the 'milky' look */
-  background: rgba(255, 255, 255, 0.005) !important;
-  backdrop-filter: blur(40px) saturate(200%) brightness(1.1) !important;
-  -webkit-backdrop-filter: blur(40px) saturate(200%) brightness(1.1) !important;
-  
-  border-radius: 44px !important;
-  
-  /* 3D Light-Catcher Edges */
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-top: 2.5px solid rgba(255, 255, 255, 0.8) !important;
-  border-left: 1.5px solid rgba(255, 255, 255, 0.6) !important;
-  
-  /* GPU Lag Fix */
-  transform: translateZ(0);
-  will-change: backdrop-filter, filter;
-  overflow: hidden;
-}
-
-/* Apply the liquid warp to a background layer ONLY to save FPS */
-.ios26-liquid-surface::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  filter: url(#ios26-refraction-filter);
-  opacity: 0.5;
-  pointer-events: none;
-}
-
-/* Ensure text/icons stay 100% sharp and un-distorted */
-.ios26-liquid-surface > * {
-  position: relative;
-  z-index: 10;
-  filter: none !important;
-}
-
-/* --- HIGH-CONTRAST MESH (REQUIRED FOR LIQUID EFFECT) --- */
 .ios26-mesh-bg {
   position: fixed;
   inset: 0;
   z-index: -1;
   background-color: #ffffff !important;
-  background-image:
+  background-image: 
     radial-gradient(at 0% 0%, #007AFF 0px, transparent 50%),
-    radial-gradient(at 50% 0%, #5856D6 0px, transparent 50%),
-    radial-gradient(at 100% 0%, #007AFF 0px, transparent 50%),
-    radial-gradient(at 0% 100%, #5856D6 0px, transparent 50%),
-    radial-gradient(at 100% 100%, #007AFF 0px, transparent 50%) !important;
-  opacity: 0.15; /* Keeps it subtle but visible enough to warp */
+    radial-gradient(at 100% 0%, #5856D6 0px, transparent 55%),
+    radial-gradient(at 50% 100%, #007AFF 0px, transparent 50%) !important;
+  opacity: 0.3 !important;
+  filter: blur(80px);
 }
 
-/* --- BUTTONS & UTILITIES --- */
 .pill-btn {
-  border-radius: 999px !important;
-  font-weight: 600;
-  background-color: #007AFF !important;
-  color: white !important;
-  transition: all 0.2s ease;
-}
-
-.pill-btn:hover {
-  transform: scale(1.02);
-  filter: brightness(1.1);
+  @apply rounded-full font-bold transition-all duration-200;
+  background: #007AFF;
+  color: white;
 }
