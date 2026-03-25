@@ -8,21 +8,21 @@ export const LiquidGlassCard: FC<Omit<HTMLAttributes<HTMLElement>, 'as'> & { chi
   ...rest
 }) => {
   const filterId = useId();
-  const cleanId = `ios26-ref-${filterId.replace(/:/g, '')}`;
+  const cleanId = `refraction-${filterId.replace(/:/g, '')}`;
 
   return (
     <>
       <svg style={{ position: 'absolute', width: 0, height: 0, pointerEvents: 'none' }} aria-hidden="true">
-        <filter id={cleanId} x="-20%" y="-20%" width="140%" height="140%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="1" seed="2" result="noise" />
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="15" xChannelSelector="R" yChannelSelector="G" />
+        <filter id={cleanId}>
+          <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="1" seed="5" result="noise" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="12" xChannelSelector="R" yChannelSelector="G" />
         </filter>
       </svg>
       <Component
         className={className}
         style={{
           position: 'relative',
-          borderRadius: '44px',
+          borderRadius: '38px',
           transform: 'translateZ(0)',
           willChange: 'filter, backdrop-filter',
           overflow: 'hidden',
@@ -30,27 +30,28 @@ export const LiquidGlassCard: FC<Omit<HTMLAttributes<HTMLElement>, 'as'> & { chi
         }}
         {...rest}
       >
+        {/* The Glass - Ultra Sharp, Zero Milk */}
         <div style={{
             position: 'absolute',
             inset: 0,
             zIndex: 0,
-            borderRadius: 'inherit',
-            background: 'rgba(255, 255, 255, 0.003)',
-            backdropFilter: 'blur(40px) saturate(210%) brightness(1.05)',
-            WebkitBackdropFilter: 'blur(40px) saturate(210%) brightness(1.05)',
+            background: 'rgba(255, 255, 255, 0.01)',
+            backdropFilter: 'blur(30px) saturate(180%) brightness(1.02)',
+            WebkitBackdropFilter: 'blur(30px) saturate(180%) brightness(1.02)',
             filter: `url(#${cleanId})`,
           }}
         />
+        {/* Physical Glass Bezel (Light Catchers) */}
         <div style={{
             position: 'absolute',
             inset: 0,
-            pointerEvents: 'none',
             zIndex: 1,
+            pointerEvents: 'none',
             borderRadius: 'inherit',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            borderTop: '2.5px solid rgba(255, 255, 255, 0.8)',
-            borderLeft: '1.5px solid rgba(255, 255, 255, 0.5)',
-            boxShadow: 'inset 0 1px 2px rgba(255, 255, 255, 0.2)',
+            border: '0.5px solid rgba(0, 0, 0, 0.05)',
+            borderTop: '1.5px solid rgba(255, 255, 255, 0.9)',
+            borderLeft: '1px solid rgba(255, 255, 255, 0.4)',
+            boxShadow: '0 4px 24px -1px rgba(0, 0, 0, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.2)',
           }}
         />
         <div style={{ position: 'relative', zIndex: 2 }}>{children}</div>
