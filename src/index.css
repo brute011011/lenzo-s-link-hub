@@ -121,9 +121,9 @@
 
 /* Small: buttons, pills, compact items */
 .safari-clean-glass-sm {
-  background: rgba(255, 255, 255, 0.45) !important;
-  backdrop-filter: blur(30px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(30px) saturate(180%) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(40px) saturate(210%) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(210%) !important;
   border-radius: 14px !important;
   border: 1px solid rgba(0, 0, 0, 0.04) !important;
   border-top: 1px solid rgba(255, 255, 255, 0.7) !important;
