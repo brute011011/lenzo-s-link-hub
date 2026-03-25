@@ -50,13 +50,16 @@ const Index = () => {
   const discordInvite = settings.discord_invite || 'https://discord.gg/your-server';
 
   return (
-    <div className="min-h-screen relative ios26-mesh-bg">
+    <div className="min-h-screen relative overflow-hidden bg-[#F5F5F7]">
+      {/* 1. THE BACKGROUND ENGINE - Forces the colors to stay fixed while you scroll */}
+      <div className="ios26-mesh-bg" aria-hidden="true" />
+
       {/* Admin link */}
       <div className="fixed top-4 right-4 z-50">
         <Link to="/login">
           <LiquidGlassCard
             className="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold hover:scale-105 transition-transform"
-            style={{ borderRadius: '999px', color: '#1D1D1F' }}
+            style={{ borderRadius: '999px', color: '#1D1D1F', background: 'rgba(255,255,255,0.1)' }}
           >
             <Shield className="h-4 w-4" style={{ color: '#007AFF' }} />
             <span>Admin</span>
@@ -72,14 +75,14 @@ const Index = () => {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="text-center py-16"
         >
-          <div className="inline-flex items-center gap-2 pill-btn px-5 py-2 text-xs font-medium mb-6" style={{ background: 'rgba(0,122,255,0.08)', color: '#007AFF', border: '1px solid rgba(0,122,255,0.15)' }}>
-            <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: '#007AFF' }} />
+          <div className="inline-flex items-center gap-2 pill-btn px-5 py-2 text-xs font-medium mb-6">
+            <span className="h-1.5 w-1.5 rounded-full animate-pulse bg-white" />
             Service Dashboard
           </div>
-          <h1 className="text-5xl sm:text-7xl font-bold tracking-tight" style={{ color: '#1D1D1F' }}>
+          <h1 className="text-5xl sm:text-7xl font-bold tracking-tight text-[#1D1D1F]">
             {siteName}
           </h1>
-          <p className="mt-5 text-lg max-w-lg mx-auto leading-relaxed" style={{ color: '#86868B' }}>
+          <p className="mt-5 text-lg max-w-lg mx-auto leading-relaxed text-[#86868B]">
             Premium Discord services — your gateway to elite tools and automation.
           </p>
         </motion.div>
@@ -91,7 +94,7 @@ const Index = () => {
 
         {/* Service Cards Grid */}
         <div className="space-y-3">
-          <h2 className="text-sm font-semibold uppercase tracking-widest px-1" style={{ color: '#86868B' }}>Services</h2>
+          <h2 className="text-sm font-bold uppercase tracking-widest px-1 text-[#86868B]">Services</h2>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -115,11 +118,6 @@ const Index = () => {
               </motion.div>
             ))}
           </motion.div>
-          {services.length === 0 && (
-            <LiquidGlassCard className="p-12 text-center">
-              <p className="text-sm" style={{ color: '#86868B' }}>No services configured yet. Add them from the admin panel.</p>
-            </LiquidGlassCard>
-          )}
         </div>
 
         {/* Discord Section */}
@@ -130,7 +128,6 @@ const Index = () => {
       </div>
 
       {/* Floating components */}
-      {/* Liquid glass is now built into each card */}
       <MusicPlayer dbTracks={musicTracks.length > 0 ? musicTracks.map(t => ({
         id: t.id,
         title: t.title,
