@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
 import { ServiceCard } from '@/components/ServiceCard';
+import { LiquidGlassCard } from '@/components/LiquidGlassCard';
 import { DiscordSection } from '@/components/DiscordSection';
 import { AnnouncementBanner } from '@/components/AnnouncementBanner';
 import { MusicPlayer } from '@/components/MusicPlayer';
@@ -52,13 +53,14 @@ const Index = () => {
     <div className="min-h-screen relative ios26-mesh-bg">
       {/* Admin link */}
       <div className="fixed top-4 right-4 z-50">
-        <Link
-          to="/login"
-          className="ios26-liquid-surface flex items-center gap-2 px-5 py-2.5 text-sm font-semibold hover:scale-105 transition-transform"
-          style={{ borderRadius: '999px', color: '#1D1D1F' }}
-        >
-          <Shield className="h-4 w-4 relative z-10" style={{ color: '#007AFF' }} />
-          <span className="relative z-10">Admin</span>
+        <Link to="/login">
+          <LiquidGlassCard
+            className="flex items-center gap-2 px-5 py-2.5 text-sm font-semibold hover:scale-105 transition-transform"
+            style={{ borderRadius: '999px', color: '#1D1D1F' }}
+          >
+            <Shield className="h-4 w-4" style={{ color: '#007AFF' }} />
+            <span>Admin</span>
+          </LiquidGlassCard>
         </Link>
       </div>
 
@@ -114,9 +116,9 @@ const Index = () => {
             ))}
           </motion.div>
           {services.length === 0 && (
-            <div className="ios26-liquid-surface p-12 text-center">
-              <p className="text-sm relative z-10" style={{ color: '#86868B' }}>No services configured yet. Add them from the admin panel.</p>
-            </div>
+            <LiquidGlassCard className="p-12 text-center">
+              <p className="text-sm" style={{ color: '#86868B' }}>No services configured yet. Add them from the admin panel.</p>
+            </LiquidGlassCard>
           )}
         </div>
 
