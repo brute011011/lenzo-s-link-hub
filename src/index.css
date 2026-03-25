@@ -8,140 +8,86 @@
   :root {
     --background: 240 5% 96%;
     --foreground: 240 10% 12%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 12%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 12%;
     --primary: 211 100% 50%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 240 5% 92%;
-    --secondary-foreground: 240 10% 12%;
-    --muted: 240 5% 92%;
-    --muted-foreground: 240 4% 46%;
-    --accent: 211 100% 50%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 240 6% 90%;
-    --input: 240 6% 90%;
-    --ring: 211 100% 50%;
     --radius: 0.75rem;
-    --sidebar-background: 240 5% 96%;
-    --sidebar-foreground: 240 10% 12%;
-    --sidebar-primary: 211 100% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 5% 92%;
-    --sidebar-accent-foreground: 240 10% 12%;
-    --sidebar-border: 240 6% 90%;
-    --sidebar-ring: 211 100% 50%;
-  }
-
-  .dark {
-    --background: 240 5% 96%;
-    --foreground: 240 10% 12%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 12%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 12%;
-    --primary: 211 100% 50%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 240 5% 92%;
-    --secondary-foreground: 240 10% 12%;
-    --muted: 240 5% 92%;
-    --muted-foreground: 240 4% 46%;
-    --accent: 211 100% 50%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 240 6% 90%;
-    --input: 240 6% 90%;
-    --ring: 211 100% 50%;
-    --sidebar-background: 240 5% 96%;
-    --sidebar-foreground: 240 10% 12%;
-    --sidebar-primary: 211 100% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 5% 92%;
-    --sidebar-accent-foreground: 240 10% 12%;
-    --sidebar-border: 240 6% 90%;
-    --sidebar-ring: 211 100% 50%;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+    @apply text-foreground;
+    background-color: #F5F5F7;
+    font-family: 'Inter', -apple-system, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     letter-spacing: -0.03em;
-    font-weight: 600;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
-    font-weight: 700;
-    letter-spacing: -0.03em;
+    overflow-x: hidden;
   }
 }
 
-/* iOS 26 Liquid Glass — handled by LiquidGlassCard component */
+/* --- THE LIQUID GLASS ENGINE (FIXED) --- */
+.ios26-liquid-surface {
+  position: relative;
+  /* Reduced opacity to 0.005 to kill the 'milky' look */
+  background: rgba(255, 255, 255, 0.005) !important;
+  backdrop-filter: blur(40px) saturate(200%) brightness(1.1) !important;
+  -webkit-backdrop-filter: blur(40px) saturate(200%) brightness(1.1) !important;
+  
+  border-radius: 44px !important;
+  
+  /* 3D Light-Catcher Edges */
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-top: 2.5px solid rgba(255, 255, 255, 0.8) !important;
+  border-left: 1.5px solid rgba(255, 255, 255, 0.6) !important;
+  
+  /* GPU Lag Fix */
+  transform: translateZ(0);
+  will-change: backdrop-filter, filter;
+  overflow: hidden;
+}
 
-/* Mesh Gradient Background */
+/* Apply the liquid warp to a background layer ONLY to save FPS */
+.ios26-liquid-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  filter: url(#ios26-refraction-filter);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Ensure text/icons stay 100% sharp and un-distorted */
+.ios26-liquid-surface > * {
+  position: relative;
+  z-index: 10;
+  filter: none !important;
+}
+
+/* --- HIGH-CONTRAST MESH (REQUIRED FOR LIQUID EFFECT) --- */
 .ios26-mesh-bg {
-  background-color: hsl(240, 5%, 96%) !important;
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-color: #ffffff !important;
   background-image:
-    radial-gradient(at 0% 0%, hsla(211, 100%, 50%, 0.3) 0px, transparent 50%),
-    radial-gradient(at 50% 0%, hsla(255, 60%, 60%, 0.3) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, hsla(211, 100%, 50%, 0.2) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, hsla(255, 60%, 60%, 0.2) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, hsla(211, 100%, 50%, 0.3) 0px, transparent 50%) !important;
-  background-attachment: fixed !important;
+    radial-gradient(at 0% 0%, #007AFF 0px, transparent 50%),
+    radial-gradient(at 50% 0%, #5856D6 0px, transparent 50%),
+    radial-gradient(at 100% 0%, #007AFF 0px, transparent 50%),
+    radial-gradient(at 0% 100%, #5856D6 0px, transparent 50%),
+    radial-gradient(at 100% 100%, #007AFF 0px, transparent 50%) !important;
+  opacity: 0.15; /* Keeps it subtle but visible enough to warp */
 }
 
-/* Status pulse */
-@keyframes pulse-green {
-  0%, 100% { box-shadow: 0 0 0 0 hsla(140, 70%, 45%, 0.4); }
-  50% { box-shadow: 0 0 0 4px hsla(140, 70%, 45%, 0); }
-}
-
-@keyframes pulse-red {
-  0%, 100% { box-shadow: 0 0 0 0 hsla(0, 80%, 50%, 0.4); }
-  50% { box-shadow: 0 0 0 4px hsla(0, 80%, 50%, 0); }
-}
-
-.status-online {
-  animation: pulse-green 2s infinite;
-}
-
-.status-offline {
-  animation: pulse-red 2s infinite;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: hsl(0, 0%, 78%);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(0, 0%, 65%);
-}
-
-/* Pill buttons */
+/* --- BUTTONS & UTILITIES --- */
 .pill-btn {
   border-radius: 999px !important;
   font-weight: 600;
+  background-color: #007AFF !important;
+  color: white !important;
   transition: all 0.2s ease;
+}
+
+.pill-btn:hover {
+  transform: scale(1.02);
+  filter: brightness(1.1);
 }
