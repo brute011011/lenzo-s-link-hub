@@ -5,7 +5,7 @@ export const ServiceCard: FC<{ name: string; url: string; description: string; s
   const isOnline = status.toLowerCase() === 'online';
   return (
     <a href={url} target="_blank" rel="noopener noreferrer" className="block group">
-      <LiquidGlassCard className="p-7 h-full flex flex-col transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-y-[-4px]">
+      <LiquidGlassCard className="p-8 h-full flex flex-col transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-y-[-4px]">
         <div className="flex justify-between items-start mb-5">
           <h3 className="text-2xl font-bold tracking-tight text-[#1D1D1F]">{name}</h3>
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/[0.03] border border-black/[0.05]">
