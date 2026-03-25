@@ -8,9 +8,7 @@
     color: #1D1D1F !important;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif !important;
     -webkit-font-smoothing: antialiased;
-    letter-spacing: -0.022em;
-    margin: 0;
-    padding: 0;
+    letter-spacing: -0.025em;
   }
 }
 
@@ -19,10 +17,27 @@
   inset: 0;
   z-index: -1;
   background: 
-    radial-gradient(at 0% 0%, rgba(0, 122, 255, 0.12) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(88, 86, 214, 0.08) 0px, transparent 50%),
+    radial-gradient(at 0% 0%, rgba(0, 122, 255, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(88, 86, 214, 0.07) 0px, transparent 50%),
     #F5F5F7;
 }
 
-/* Force everything to use the SF Pro tight kerning */
-h1, h2, h3 { letter-spacing: -0.05em !important; font-weight: 800 !important; }
+/* THE $1M WATER ENGINE */
+.glass-water-surface {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(40px) saturate(200%) brightness(1.1);
+  -webkit-backdrop-filter: blur(40px) saturate(200%) brightness(1.1);
+  background: rgba(255, 255, 255, 0.001);
+  pointer-events: none;
+}
+
+/* This creates the physical "bending" of light */
+.glass-water-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03; /* Micro-grain for realism */
+  mix-blend-mode: overlay;
+}
