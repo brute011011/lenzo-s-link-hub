@@ -1,23 +1,8 @@
-import { FC, useId, useState, ReactNode, CSSProperties, ElementType, HTMLAttributes } from 'react';
-
-// Browser detection for Safari/iOS fallback
-const IOS_REGEX = /iPad|iPhone|iPod/;
-const SAFARI_REGEX = /^((?!chrome|android).)*safari/i;
-
-const hasLimitedFilterSupport = (): boolean => {
-  if (typeof window === 'undefined') return false;
-  const ua = window.navigator.userAgent;
-  return IOS_REGEX.test(ua) || SAFARI_REGEX.test(ua);
-};
+import { FC, useId, ReactNode, CSSProperties, ElementType, HTMLAttributes } from 'react';
 
 interface LiquidGlassCardProps extends Omit<HTMLAttributes<HTMLElement>, 'as'> {
   children?: ReactNode;
   className?: string;
-  backdropBlur?: number;
-  tintColor?: string;
-  displacementScale?: number;
-  turbulenceBaseFrequency?: string;
-  turbulenceSeed?: number;
   as?: ElementType;
   style?: CSSProperties;
 }
@@ -25,148 +10,128 @@ interface LiquidGlassCardProps extends Omit<HTMLAttributes<HTMLElement>, 'as'> {
 export const LiquidGlassCard: FC<LiquidGlassCardProps> = ({
   children,
   className = '',
-  backdropBlur = 40,
-  tintColor = 'rgba(255, 255, 255, 0.05)',
-  displacementScale = 150,
-  turbulenceBaseFrequency = '0.008 0.008',
-  turbulenceSeed = 1.5,
   as: Component = 'div',
   style,
   ...rest
 }) => {
   const filterId = useId();
-  const cleanFilterId = `liquid-glass-${filterId.replace(/:/g, '-')}`;
-  const [useSimplifiedFilter] = useState(() => hasLimitedFilterSupport());
+  const cleanId = `ios26-refraction-${filterId.replace(/:/g, '-')}`;
 
   return (
     <>
-      <svg style={{ display: 'none' }} suppressHydrationWarning>
-        {useSimplifiedFilter ? (
+      {/* SVG Refraction + Chromatic Aberration Engine */}
+      <svg style={{ position: 'absolute', width: 0, height: 0 }} aria-hidden="true">
+        <defs>
           <filter
-            id={cleanFilterId}
-            x="-20%"
-            y="-20%"
-            width="140%"
-            height="140%"
+            id={cleanId}
+            x="-10%"
+            y="-10%"
+            width="120%"
+            height="120%"
             filterUnits="objectBoundingBox"
+            colorInterpolationFilters="sRGB"
           >
+            {/* Turbulence for organic distortion */}
             <feTurbulence
               type="fractalNoise"
-              baseFrequency={turbulenceBaseFrequency}
-              numOctaves={2}
-              seed={turbulenceSeed}
-              result="turbulence"
+              baseFrequency="0.015"
+              numOctaves={3}
+              seed={2}
+              result="noise"
             />
-            <feGaussianBlur in="turbulence" stdDeviation="2" result="blur" />
+            <feGaussianBlur in="noise" stdDeviation="1.5" result="softNoise" />
+
+            {/* Primary displacement — physical warp */}
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="softNoise"
+              scale={20}
+              xChannelSelector="R"
+              yChannelSelector="G"
+              result="warped"
+            />
+
+            {/* Chromatic Aberration: RGB channel split */}
+            {/* Red channel — shift left */}
+            <feOffset in="warped" dx={-1.2} dy={0} result="redShift" />
             <feColorMatrix
-              in="blur"
+              in="redShift"
               type="matrix"
               values="1 0 0 0 0
+                      0 0 0 0 0
+                      0 0 0 0 0
+                      0 0 0 1 0"
+              result="red"
+            />
+
+            {/* Green channel — center */}
+            <feColorMatrix
+              in="warped"
+              type="matrix"
+              values="0 0 0 0 0
                       0 1 0 0 0
+                      0 0 0 0 0
+                      0 0 0 1 0"
+              result="green"
+            />
+
+            {/* Blue channel — shift right */}
+            <feOffset in="warped" dx={1.2} dy={0} result="blueShift" />
+            <feColorMatrix
+              in="blueShift"
+              type="matrix"
+              values="0 0 0 0 0
+                      0 0 0 0 0
                       0 0 1 0 0
-                      0 0 0 0.15 0"
-              result="transparency"
+                      0 0 0 1 0"
+              result="blue"
             />
-            <feBlend in="SourceGraphic" in2="transparency" mode="normal" />
-          </filter>
-        ) : (
-          <filter
-            id={cleanFilterId}
-            x="0%"
-            y="0%"
-            width="100%"
-            height="100%"
-            filterUnits="objectBoundingBox"
-          >
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency={turbulenceBaseFrequency}
-              numOctaves={1}
-              seed={turbulenceSeed}
-              result="turbulence"
-            />
-            <feComponentTransfer in="turbulence" result="mapped">
-              <feFuncR type="gamma" amplitude={1} exponent={10} offset={0.5} />
-              <feFuncG type="gamma" amplitude={0} exponent={1} offset={0} />
-              <feFuncB type="gamma" amplitude={0} exponent={1} offset={0.5} />
-            </feComponentTransfer>
-            <feGaussianBlur in="turbulence" stdDeviation={3} result="softMap" />
+
+            {/* Recombine RGB */}
+            <feBlend in="red" in2="green" mode="screen" result="rg" />
+            <feBlend in="rg" in2="blue" mode="screen" result="chromatic" />
+
+            {/* Specular highlight from the noise */}
             <feSpecularLighting
-              in="softMap"
-              surfaceScale={5}
-              specularConstant={1}
-              specularExponent={100}
+              in="softNoise"
+              surfaceScale={3}
+              specularConstant={0.8}
+              specularExponent={80}
               lightingColor="white"
               result="specLight"
             >
-              <fePointLight x={-200} y={-200} z={300} />
+              <fePointLight x={-150} y={-150} z={250} />
             </feSpecularLighting>
             <feComposite
               in="specLight"
-              operator="arithmetic"
-              k1={0}
-              k2={1}
-              k3={1}
-              k4={0}
-              result="litImage"
+              in2="SourceGraphic"
+              operator="in"
+              result="clippedSpec"
             />
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="softMap"
-              scale={displacementScale}
-              xChannelSelector="R"
-              yChannelSelector="G"
-            />
+
+            {/* Blend specular onto chromatic result */}
+            <feBlend in="chromatic" in2="clippedSpec" mode="screen" />
           </filter>
-        )}
+        </defs>
       </svg>
 
       <Component
-        className={className}
-        style={{
-          position: 'relative',
-          overflow: 'hidden',
-          borderRadius: '22px',
-          border: '1px solid rgba(0, 0, 0, 0.05)',
-          borderTop: '1.5px solid rgba(255, 255, 255, 0.4)',
-          borderLeft: '1.5px solid rgba(255, 255, 255, 0.4)',
-          boxShadow:
-            'inset 0 1px 1px rgba(255, 255, 255, 0.3), 0 8px 24px rgba(0, 0, 0, 0.06)',
-          ...style,
-        }}
+        className={`ios26-liquid-surface ${className}`}
+        style={style}
         {...rest}
       >
-        {/* SVG filter refraction layer */}
+        {/* Sheen highlight */}
         <div
           style={{
             position: 'absolute',
             inset: 0,
-            zIndex: 0,
-            overflow: 'hidden',
-            backdropFilter: `blur(${backdropBlur}px) saturate(210%)`,
-            WebkitBackdropFilter: `blur(${backdropBlur}px) saturate(210%)`,
-            filter: `url(#${cleanFilterId})`,
-            isolation: 'isolate',
-            borderRadius: '22px',
-            ...(useSimplifiedFilter && {
-              transform: 'translateZ(0)',
-              willChange: 'transform',
-            }),
-          }}
-        />
-
-        {/* Tint overlay */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 40%)',
+            pointerEvents: 'none',
             zIndex: 1,
-            background: tintColor,
-            borderRadius: '22px',
+            borderRadius: 'inherit',
           }}
         />
-
-        {/* Content */}
+        {/* Content — stays sharp above the warp */}
         <div style={{ position: 'relative', zIndex: 2 }}>{children}</div>
       </Component>
     </>

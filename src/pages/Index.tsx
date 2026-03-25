@@ -49,15 +49,14 @@ const Index = () => {
   const discordInvite = settings.discord_invite || 'https://discord.gg/your-server';
 
   return (
-    <div className="min-h-screen relative main-content" style={{ background: '#F5F5F7' }}>
+    <div className="min-h-screen relative ios26-mesh-bg">
       {/* Admin link */}
       <div className="fixed top-4 right-4 z-50">
         <Link
           to="/login"
-          className="safari-clean-glass flex items-center gap-2 px-5 py-2.5 text-sm font-semibold hover:scale-105 transition-transform"
+          className="ios26-liquid-surface flex items-center gap-2 px-5 py-2.5 text-sm font-semibold hover:scale-105 transition-transform"
           style={{ borderRadius: '999px', color: '#1D1D1F' }}
         >
-          <div className="surface-sheen" style={{ borderRadius: '999px' }} />
           <Shield className="h-4 w-4 relative z-10" style={{ color: '#007AFF' }} />
           <span className="relative z-10">Admin</span>
         </Link>
@@ -115,8 +114,7 @@ const Index = () => {
             ))}
           </motion.div>
           {services.length === 0 && (
-            <div className="safari-clean-glass-sm p-12 text-center">
-              <div className="surface-sheen" />
+            <div className="ios26-liquid-surface p-12 text-center">
               <p className="text-sm relative z-10" style={{ color: '#86868B' }}>No services configured yet. Add them from the admin panel.</p>
             </div>
           )}
